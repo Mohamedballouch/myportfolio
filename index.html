@@ -1793,203 +1793,346 @@
             -webkit-backdrop-filter: var(--backdrop-blur);
         }
 
-        .timeline {
+        /* Experience Timeline */
+        .experience-timeline {
+            max-width: 800px;
+            margin: 3rem auto;
             position: relative;
-            padding: 3rem 0;
         }
 
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 50%, var(--accent-color) 100%);
-            transform: translateX(-50%);
-            border-radius: 2px;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
-        }
-
-        .timeline-item {
-            position: relative;
-            padding: 2.5rem 0;
-            width: 50%;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease forwards;
-        }
-
-        .timeline-item:nth-child(odd) {
-            padding-right: 4rem;
-            text-align: right;
-        }
-
-        .timeline-item:nth-child(even) {
-            left: 50%;
-            padding-left: 4rem;
-        }
-
-        .timeline-dot {
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            background: var(--gradient-1);
-            border-radius: 50%;
-            top: 2.5rem;
-            right: -12px;
-            z-index: 2;
-            box-shadow: 
-                0 0 30px rgba(0, 212, 255, 0.7),
-                0 0 60px rgba(0, 212, 255, 0.3);
-            border: 3px solid var(--bg-dark);
-        }
-
-        .timeline-item:nth-child(even) .timeline-dot {
-            left: -12px;
-            right: auto;
-        }
-
-        .timeline-content {
-            background: var(--bg-glass);
-            backdrop-filter: var(--backdrop-blur);
-            -webkit-backdrop-filter: var(--backdrop-blur);
-            padding: 2.5rem;
-            border-radius: 20px;
-            border: 1px solid var(--border-glass);
+        .timeline-card {
+            margin-bottom: 2rem;
             transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
         }
 
-        .timeline-content::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 255, 136, 0.1) 100%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .timeline-content:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-color);
-            box-shadow: var(--shadow-glass);
-        }
-
-        .timeline-content:hover::before {
+        .timeline-card[data-expanded="true"] .card-details {
+            max-height: 800px;
             opacity: 1;
+            margin-top: 1rem;
         }
 
-        .timeline-date {
+        .timeline-card[data-expanded="true"] .expand-btn i {
+            transform: rotate(180deg);
+        }
+
+        /* Card Preview */
+        .card-preview {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card-preview:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.15);
+        }
+
+        /* Timeline Marker */
+        .timeline-marker {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .marker-dot {
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            border: 3px solid var(--bg-dark);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-marker.current .marker-dot {
             background: var(--gradient-1);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 600;
-            font-size: 1rem;
-            margin-bottom: 0.8rem;
-            position: relative;
-            z-index: 1;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.7);
         }
 
-        .timeline-content h3 {
-            font-size: 1.6rem;
+        .marker-line {
+            width: 2px;
+            height: 60px;
+            background: linear-gradient(180deg, var(--primary-color), rgba(0, 212, 255, 0.3));
+            margin: 5px auto 0;
+        }
+
+        .timeline-marker.last .marker-line {
+            display: none;
+        }
+
+        /* Preview Content */
+        .preview-content {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .role-summary {
+            flex: 1;
+        }
+
+        .role-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
             margin-bottom: 0.8rem;
+        }
+
+        .role-header h3 {
+            font-size: 1.3rem;
             color: var(--text-primary);
-            font-weight: 700;
-            position: relative;
-            z-index: 1;
+            margin: 0;
         }
 
-        .timeline-company {
-            color: var(--text-secondary);
-            font-style: italic;
-            margin-bottom: 1.5rem;
+        .role-period {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .company-info {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .company-logo {
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            object-fit: contain;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 8px;
-            border: 2px solid var(--border-glass);
-            transition: all 0.4s ease;
-            filter: brightness(1) contrast(1.1);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .company-logo:hover {
-            border-color: var(--primary-color);
-            box-shadow: 
-                0 0 25px rgba(0, 212, 255, 0.6), 
-                0 8px 20px rgba(0, 0, 0, 0.2);
-            background: rgba(255, 255, 255, 1);
-            transform: scale(1.15) rotate(5deg);
-        }
-
-        .company-logo.blackstone {
-            background: rgba(26, 26, 26, 0.95);
-            border: 2px solid var(--primary-color);
-            padding: 10px;
-            filter: brightness(1.4) contrast(1.4);
-        }
-
-        .company-logo.blackstone:hover {
-            background: rgba(0, 212, 255, 0.2);
-            box-shadow: 
-                0 0 30px rgba(0, 212, 255, 0.8), 
-                0 8px 20px rgba(0, 0, 0, 0.2);
-            transform: scale(1.15) rotate(-5deg);
-        }
-
-        .timeline-description {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            position: relative;
-            z-index: 1;
-        }
-
-        .timeline-description ul {
-            list-style: none;
-            margin-top: 1.2rem;
-        }
-
-        .timeline-description li {
+            gap: 0.8rem;
             margin-bottom: 1rem;
-            padding-left: 2rem;
-            position: relative;
-            transition: all 0.3s ease;
+            color: var(--text-secondary);
         }
 
-        .timeline-description li::before {
-            content: '▸';
-            position: absolute;
-            left: 0;
-            color: var(--primary-color);
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
+        .mini-logo {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            object-fit: contain;
+            background: white;
+            padding: 3px;
         }
 
-        .timeline-description li:hover {
+        .mini-logo.blackstone {
+            background: #1a1a1a;
+            padding: 4px;
+        }
+
+        .mini-logo-placeholder {
+            width: 30px;
+            height: 30px;
+            background: var(--gradient-1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .company-name {
+            font-weight: 600;
             color: var(--text-primary);
+        }
+
+        .company-location {
+            font-size: 0.9rem;
+        }
+
+        .role-highlights {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .highlight-tag {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--primary-color);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        /* Expand Button */
+        .expand-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.6rem 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .expand-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .expand-btn i {
+            transition: transform 0.3s ease;
+        }
+
+        /* Card Details */
+        .card-details {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            background: var(--bg-card);
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+        }
+
+        .details-grid {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        /* Impact Section */
+        .impact-section h4,
+        .tech-section h4 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .impact-section h4::before {
+            content: '🎯';
+        }
+
+        .tech-section h4::before {
+            content: '⚙️';
+        }
+
+        .achievement-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .achievement-list li {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: rgba(0, 212, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .achievement-list li:hover {
+            border-color: rgba(0, 212, 255, 0.3);
             transform: translateX(5px);
         }
 
-        .timeline-description li:hover::before {
-            color: var(--secondary-color);
-            transform: scale(1.2);
+        .achievement-list i {
+            color: var(--primary-color);
+            margin-top: 0.2rem;
+            flex-shrink: 0;
+        }
+
+        .achievement-list strong {
+            color: var(--text-primary);
+        }
+
+        /* Tech Section */
+        .tech-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .tech-category {
+            background: rgba(0, 212, 255, 0.05);
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 212, 255, 0.1);
+        }
+
+        .category-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .tech-item {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--primary-color);
+            padding: 0.2rem 0.6rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* Experience Section - Responsive */
+        @media (max-width: 768px) {
+            .card-preview {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .timeline-marker {
+                align-self: flex-start;
+            }
+            
+            .preview-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .role-header {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: flex-start;
+            }
+            
+            .company-info {
+                flex-wrap: wrap;
+            }
+            
+            .details-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+            }
+            
+            .achievement-list li {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
         }
 
         /* Projects Section */
@@ -3802,89 +3945,356 @@
     </section>
 
     <!-- Experience Section -->
-    <section id="experience">
+    <section id="experience" aria-labelledby="experience-heading">
         <div class="container">
-            <h2 class="section-title">Professional Experience</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">Feb 2025 - Present</div>
-                        <h3>Generative AI Consultant</h3>
-                        <div class="timeline-company">
-                            <img src="assets/images/LogoExakisNelite.png" alt="Exakis Nelite Logo" class="company-logo">
-                            <span>Exakis Nelite - Casablanca, Morocco</span>
+            <h2 class="section-title" id="experience-heading">Career Timeline</h2>
+            
+            <!-- Experience Cards -->
+            <div class="experience-timeline">
+                <!-- Current Role -->
+                <div class="timeline-card current" data-expanded="false">
+                    <div class="card-preview">
+                        <div class="timeline-marker current">
+                            <div class="marker-dot"></div>
+                            <div class="marker-line"></div>
                         </div>
-                        <div class="timeline-description">
-                            <ul>
-                                <li><strong>Intelligent Document Processing:</strong> Architected and deployed end-to-end RPA pipeline combining OCR and LLM technologies for automated invoice and ID processing, achieving 95% extraction accuracy with intelligent validation and seamless database integration</li>
-                                <li><strong>Enterprise AI Chatbot:</strong> Designed and implemented privacy-first Azure-based conversational AI platform featuring advanced RAG capabilities, multi-agent orchestration, and integrated tools including web search and code interpreter</li>
-                                <li><strong>Data Extraction Innovation:</strong> Developed sophisticated document understanding models using state-of-the-art OCR engines and fine-tuned LLMs, reducing manual processing time by 80% while maintaining data integrity</li>
-                                <li><strong>Agent-Based AI Systems:</strong> Built intelligent agent framework with tool-calling capabilities, enabling dynamic web search, code execution, and real-time data retrieval within secure enterprise environments</li>
-                                <li><strong>Privacy & Compliance:</strong> Implemented security and data-governance controls for LLM workflows, protecting sensitive data and meeting industry requirements</li>
-                                <li><strong>Client Consultation:</strong> Provided strategic AI consulting to enterprise clients, identifying automation opportunities and designing custom generative AI solutions aligned with business objectives</li>
-                            </ul>
+                        
+                        <div class="preview-content">
+                            <div class="role-summary">
+                                <div class="role-header">
+                                    <h3>Generative AI Consultant</h3>
+                                    <span class="role-period">Feb 2025 - Present</span>
+                                </div>
+                                <div class="company-info">
+                                    <img src="assets/images/LogoExakisNelite.png" alt="Exakis Nelite" class="mini-logo">
+                                    <span class="company-name">Exakis Nelite</span>
+                                    <span class="company-location">Casablanca, Morocco</span>
+                                </div>
+                                <div class="role-highlights">
+                                    <span class="highlight-tag">95% Accuracy</span>
+                                    <span class="highlight-tag">80% Time Reduction</span>
+                                    <span class="highlight-tag">Enterprise AI</span>
+                                </div>
+                            </div>
+                            
+                            <button class="expand-btn">
+                                <i class="fas fa-chevron-down"></i>
+                                <span>View Details</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="card-details">
+                        <div class="details-grid">
+                            <div class="impact-section">
+                                <h4>Key Achievements</h4>
+                                <ul class="achievement-list">
+                                    <li>
+                                        <i class="fas fa-file-alt"></i>
+                                        <div>
+                                            <strong>Intelligent Document Processing:</strong> 
+                                            Architected and deployed end-to-end RPA pipeline combining OCR and LLM technologies for automated invoice and ID processing, achieving 95% extraction accuracy with intelligent validation and seamless database integration
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-comments"></i>
+                                        <div>
+                                            <strong>Enterprise AI Chatbot:</strong> 
+                                            Designed and implemented privacy-first Azure-based conversational AI platform featuring advanced RAG capabilities, multi-agent orchestration, and integrated tools including web search and code interpreter
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-robot"></i>
+                                        <div>
+                                            <strong>Agent-Based AI Systems:</strong> 
+                                            Built intelligent agent framework with tool-calling capabilities, enabling dynamic web search, code execution, and real-time data retrieval within secure enterprise environments
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="tech-section">
+                                <h4>Technologies Used</h4>
+                                <div class="tech-grid">
+                                    <div class="tech-category">
+                                        <span class="category-label">AI/ML</span>
+                                        <div class="tech-list">
+                                            <span class="tech-item">LangChain</span>
+                                            <span class="tech-item">RAG Systems</span>
+                                            <span class="tech-item">OCR</span>
+                                            <span class="tech-item">LLMs</span>
+                                        </div>
+                                    </div>
+                                    <div class="tech-category">
+                                        <span class="category-label">Cloud</span>
+                                        <div class="tech-list">
+                                            <span class="tech-item">Azure</span>
+                                            <span class="tech-item">FastAPI</span>
+                                            <span class="tech-item">Docker</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">Jan 2024 - Jan 2025</div>
-                        <h3>Senior Machine Learning Engineer</h3>
-                        <div class="timeline-company">
-                            <img src="assets/images/logo-dxc-tech.png" alt="DXC Technology Logo" class="company-logo">
-                            <span>DXC Technology - Casablanca, Morocco</span>
+
+                <!-- Senior ML Engineer -->
+                <div class="timeline-card" data-expanded="false">
+                    <div class="card-preview">
+                        <div class="timeline-marker">
+                            <div class="marker-dot"></div>
+                            <div class="marker-line"></div>
                         </div>
-                        <div class="timeline-description">
-                            <ul>
-                                <li><strong>AI Architecture & Implementation:</strong> Spearheaded enterprise-scale LLM and generative AI deployment for insurance sector, designing end-to-end AI pipelines that enhanced decision-making processes and customer interactions</li>
-                                <li><strong>Performance Optimization:</strong> Achieved 20% improvement in RAG system accuracy through advanced reranking algorithms and 30% latency reduction via intelligent caching mechanisms for high-frequency queries</li>
-                                <li><strong>Multimodal AI Development:</strong> Engineered and deployed multimodal LLM capabilities enabling simultaneous text and image processing, expanding AI applicability across diverse insurance use cases</li>
-                                <li><strong>AI Evaluation Framework:</strong> Built comprehensive evaluation infrastructure for RAG solutions, implementing systematic assessment methodologies for question-answering quality and continuous performance monitoring</li>
-                                <li><strong>Prompt Engineering Expertise:</strong> Led extensive prompt optimization initiatives, significantly improving response relevance and reducing hallucinations by 40%, ensuring reliable AI-generated insights for production systems</li>
-                                <li><strong>Research & Innovation:</strong> Conducted cutting-edge research on LLM advancements, integrating state-of-the-art techniques to maintain competitive advantage in AI-driven enterprise solutions</li>
-                            </ul>
+                        
+                        <div class="preview-content">
+                            <div class="role-summary">
+                                <div class="role-header">
+                                    <h3>Senior Machine Learning Engineer</h3>
+                                    <span class="role-period">Jan 2024 - Jan 2025</span>
+                                </div>
+                                <div class="company-info">
+                                    <img src="assets/images/logo-dxc-tech.png" alt="DXC Technology" class="mini-logo">
+                                    <span class="company-name">DXC Technology</span>
+                                    <span class="company-location">Casablanca, Morocco</span>
+                                </div>
+                                <div class="role-highlights">
+                                    <span class="highlight-tag">20% Accuracy ↑</span>
+                                    <span class="highlight-tag">30% Latency ↓</span>
+                                    <span class="highlight-tag">Insurance AI</span>
+                                </div>
+                            </div>
+                            
+                            <button class="expand-btn">
+                                <i class="fas fa-chevron-down"></i>
+                                <span>View Details</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="card-details">
+                        <div class="details-grid">
+                            <div class="impact-section">
+                                <h4>Key Achievements</h4>
+                                <ul class="achievement-list">
+                                    <li>
+                                        <i class="fas fa-building"></i>
+                                        <div>
+                                            <strong>AI Architecture & Implementation:</strong> 
+                                            Spearheaded enterprise-scale LLM and generative AI deployment for insurance sector, designing end-to-end AI pipelines that enhanced decision-making processes and customer interactions
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-tachometer-alt"></i>
+                                        <div>
+                                            <strong>Performance Optimization:</strong> 
+                                            Achieved 20% improvement in RAG system accuracy through advanced reranking algorithms and 30% latency reduction via intelligent caching mechanisms for high-frequency queries
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-eye"></i>
+                                        <div>
+                                            <strong>Multimodal AI Development:</strong> 
+                                            Engineered and deployed multimodal LLM capabilities enabling simultaneous text and image processing, expanding AI applicability across diverse insurance use cases
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="tech-section">
+                                <h4>Technologies Used</h4>
+                                <div class="tech-grid">
+                                    <div class="tech-category">
+                                        <span class="category-label">ML Frameworks</span>
+                                        <div class="tech-list">
+                                            <span class="tech-item">PyTorch</span>
+                                            <span class="tech-item">TensorFlow</span>
+                                            <span class="tech-item">MLOps</span>
+                                        </div>
+                                    </div>
+                                    <div class="tech-category">
+                                        <span class="category-label">Specialization</span>
+                                        <div class="tech-list">
+                                            <span class="tech-item">Insurance AI</span>
+                                            <span class="tech-item">Evaluation</span>
+                                            <span class="tech-item">Optimization</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">Dec 2020 - Dec 2023</div>
-                        <h3>Data Scientist & ML Engineer</h3>
-                        <div class="timeline-company">
-                            <img src="assets/images/logo-blackstone.png" alt="BlackStone EIT Logo" class="company-logo blackstone">
-                            <span>BlackStone Eit - Seattle, WA</span>
+
+                <!-- Data Scientist -->
+                <div class="timeline-card" data-expanded="false">
+                    <div class="card-preview">
+                        <div class="timeline-marker">
+                            <div class="marker-dot"></div>
+                            <div class="marker-line"></div>
                         </div>
-                        <div class="timeline-description">
-                            <ul>
-                                <li><strong>Cloud AI Deployment:</strong> Architected and deployed production-grade ML models on AWS and Azure, implementing robust MLOps practices with automated CI/CD pipelines and model versioning</li>
-                                <li><strong>Multimodal AI Solutions:</strong> Developed enterprise archive digitalization system using Azure Video Indexer, enabling intelligent multi-modal search across video/image content with keyword, topic, and visual element recognition</li>
-                                <li><strong>Computer Vision Systems:</strong> Engineered automated quality assessment system using pretrained CNNs for real-time pizza quality evaluation and personalized recommendation engines</li>
-                                <li><strong>Conversational AI:</strong> Built and deployed internal GPT-powered chatbot integrated with LangChain, OpenAI APIs, and vector databases (Pinecone) for enhanced knowledge management and intelligent query resolution</li>
-                                <li><strong>Geospatial AI:</strong> Implemented advanced image segmentation algorithms for satellite imagery analysis, delivering AI-driven insights for urban planning and environmental monitoring applications</li>
-                                <li><strong>Data Engineering:</strong> Designed robust ETL pipelines with comprehensive data quality checks and error handling mechanisms within Azure Data Factory, ensuring data integrity for ML workflows</li>
-                                <li><strong>NLP Analytics:</strong> Delivered comprehensive text analytics and sentiment analysis solutions using advanced NLP techniques, providing actionable insights for customer feedback analysis</li>
-                            </ul>
+                        
+                        <div class="preview-content">
+                            <div class="role-summary">
+                                <div class="role-header">
+                                    <h3>Data Scientist & ML Engineer</h3>
+                                    <span class="role-period">Dec 2020 - Dec 2023</span>
+                                </div>
+                                <div class="company-info">
+                                    <img src="assets/images/logo-blackstone.png" alt="BlackStone EIT" class="mini-logo blackstone">
+                                    <span class="company-name">BlackStone Eit</span>
+                                    <span class="company-location">Seattle, WA</span>
+                                </div>
+                                <div class="role-highlights">
+                                    <span class="highlight-tag">Cloud Deployment</span>
+                                    <span class="highlight-tag">Computer Vision</span>
+                                    <span class="highlight-tag">3 Years</span>
+                                </div>
+                            </div>
+                            
+                            <button class="expand-btn">
+                                <i class="fas fa-chevron-down"></i>
+                                <span>View Details</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="card-details">
+                        <div class="details-grid">
+                            <div class="impact-section">
+                                <h4>Key Achievements</h4>
+                                <ul class="achievement-list">
+                                    <li>
+                                        <i class="fas fa-cloud"></i>
+                                        <div>
+                                            <strong>Cloud AI Deployment:</strong> 
+                                            Architected and deployed production-grade ML models on AWS and Azure, implementing robust MLOps practices with automated CI/CD pipelines and model versioning
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-video"></i>
+                                        <div>
+                                            <strong>Multimodal Archive:</strong> 
+                                            Developed enterprise archive digitalization system using Azure Video Indexer, enabling intelligent multi-modal search across video/image content with keyword, topic, and visual element recognition
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-satellite"></i>
+                                        <div>
+                                            <strong>Geospatial AI:</strong> 
+                                            Implemented advanced image segmentation algorithms for satellite imagery analysis, delivering AI-driven insights for urban planning and environmental monitoring applications
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="tech-section">
+                                <h4>Technologies Used</h4>
+                                <div class="tech-grid">
+                                    <div class="tech-category">
+                                        <span class="category-label">Cloud Platforms</span>
+                                        <div class="tech-list">
+                                            <span class="tech-item">AWS</span>
+                                            <span class="tech-item">Azure</span>
+                                            <span class="tech-item">MLOps</span>
+                                        </div>
+                                    </div>
+                                    <div class="tech-category">
+                                        <span class="category-label">AI/ML</span>
+                                        <div class="tech-list">
+                                            <span class="tech-item">Computer Vision</span>
+                                            <span class="tech-item">NLP</span>
+                                            <span class="tech-item">Data Engineering</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">June 2020 - Dec 2020</div>
-                        <h3>Data Scientist & Machine Learning Engineer</h3>
-                        <div class="timeline-company">
-                            <span>3W Media - Casablanca, Morocco</span>
+
+                <!-- Junior Role -->
+                <div class="timeline-card" data-expanded="false">
+                    <div class="card-preview">
+                        <div class="timeline-marker last">
+                            <div class="marker-dot"></div>
                         </div>
-                        <div class="timeline-description">
-                            <ul>
-                                <li><strong>Social Media Data Mining:</strong> Developed comprehensive data scraping infrastructure for social media platforms using Python, Selenium, GraphQL & BeautifulSoup</li>
-                                <li><strong>Data Processing & Analytics:</strong> Designed robust data processing pipelines for structuring and manipulating social media data using SQL for large-scale analytics</li>
-                                <li><strong>Business Intelligence:</strong> Generated interactive dashboards and detailed reports using Tableau, Qlik and PowerBI for actionable business insights</li>
-                                <li><strong>NLP & Sentiment Analysis:</strong> Implemented advanced Natural Language Processing algorithms to evaluate social media posts & comments using sophisticated sentiment analysis techniques</li>
-                            </ul>
+                        
+                        <div class="preview-content">
+                            <div class="role-summary">
+                                <div class="role-header">
+                                    <h3>Data Scientist & ML Engineer</h3>
+                                    <span class="role-period">June - Dec 2020</span>
+                                </div>
+                                <div class="company-info">
+                                    <div class="mini-logo-placeholder">3W</div>
+                                    <span class="company-name">3W Media</span>
+                                    <span class="company-location">Casablanca, Morocco</span>
+                                </div>
+                                <div class="role-highlights">
+                                    <span class="highlight-tag">Social Media</span>
+                                    <span class="highlight-tag">Data Mining</span>
+                                    <span class="highlight-tag">First Role</span>
+                                </div>
+                            </div>
+                            
+                            <button class="expand-btn">
+                                <i class="fas fa-chevron-down"></i>
+                                <span>View Details</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="card-details">
+                        <div class="details-grid">
+                            <div class="impact-section">
+                                <h4>Key Achievements</h4>
+                                <ul class="achievement-list">
+                                    <li>
+                                        <i class="fas fa-hashtag"></i>
+                                        <div>
+                                            <strong>Social Media Mining:</strong> 
+                                            Developed comprehensive data scraping infrastructure for social media platforms using Python, Selenium, GraphQL & BeautifulSoup
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-chart-bar"></i>
+                                        <div>
+                                            <strong>Business Intelligence:</strong> 
+                                            Generated interactive dashboards and detailed reports using Tableau, Qlik and PowerBI for actionable business insights
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-heart"></i>
+                                        <div>
+                                            <strong>Sentiment Analysis:</strong> 
+                                            Implemented advanced Natural Language Processing algorithms to evaluate social media posts & comments using sophisticated sentiment analysis techniques
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="tech-section">
+                                <h4>Technologies Used</h4>
+                                <div class="tech-grid">
+                                    <div class="tech-category">
+                                        <span class="category-label">Data Tools</span>
+                                        <div class="tech-list">
+                                            <span class="tech-item">Python</span>
+                                            <span class="tech-item">Selenium</span>
+                                            <span class="tech-item">SQL</span>
+                                        </div>
+                                    </div>
+                                    <div class="tech-category">
+                                        <span class="category-label">Visualization</span>
+                                        <div class="tech-list">
+                                            <span class="tech-item">Tableau</span>
+                                            <span class="tech-item">PowerBI</span>
+                                            <span class="tech-item">Qlik</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -4618,6 +5028,64 @@
                 }
             `;
             document.head.appendChild(style);
+        });
+    </script>
+
+    <!-- Experience Cards Interaction Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const timelineCards = document.querySelectorAll('.timeline-card');
+            
+            timelineCards.forEach(card => {
+                const expandBtn = card.querySelector('.expand-btn');
+                const cardPreview = card.querySelector('.card-preview');
+                
+                [expandBtn, cardPreview].forEach(element => {
+                    element.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        
+                        // Toggle current card
+                        const isExpanded = card.getAttribute('data-expanded') === 'true';
+                        
+                        // Close all other cards
+                        timelineCards.forEach(otherCard => {
+                            if (otherCard !== card) {
+                                otherCard.setAttribute('data-expanded', 'false');
+                                const otherBtn = otherCard.querySelector('.expand-btn span');
+                                if (otherBtn) otherBtn.textContent = 'View Details';
+                            }
+                        });
+                        
+                        // Toggle current card
+                        card.setAttribute('data-expanded', !isExpanded);
+                        
+                        // Update button text
+                        const btnText = expandBtn.querySelector('span');
+                        if (btnText) {
+                            btnText.textContent = !isExpanded ? 'Hide Details' : 'View Details';
+                        }
+                    });
+                });
+            });
+            
+            // Intersection Observer for scroll animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }, index * 150);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            timelineCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
         });
     </script>
 
