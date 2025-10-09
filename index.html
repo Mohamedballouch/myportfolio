@@ -29,7 +29,16 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         
         <!-- Translations -->
-        <script src="translations.js"></script>    <style>
+        <script src="translations.js"></script>
+        
+        <!-- Immediate visibility fix -->
+        <script>
+            // Ensure page is visible immediately
+            document.documentElement.style.visibility = 'visible';
+            document.documentElement.style.opacity = '1';
+        </script>
+        
+        <style>
         :root[data-theme="dark"] {
             --primary-color: #00d4ff;
             --secondary-color: #00ff88;
