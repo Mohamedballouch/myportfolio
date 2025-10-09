@@ -2192,6 +2192,43 @@
             box-shadow: 0 10px 25px rgba(0, 212, 255, 0.4);
         }
 
+        .publication-abstract {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            font-style: italic;
+            padding: 1rem 0;
+            border-left: 3px solid var(--primary-color);
+            padding-left: 1.5rem;
+            background: rgba(0, 212, 255, 0.03);
+            border-radius: 0 10px 10px 0;
+        }
+
+        .publication-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .publication-keywords .keyword {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--primary-color);
+            padding: 0.4rem 1rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .publication-keywords .keyword:hover {
+            background: rgba(0, 212, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.2);
+        }
+
         /* Education Section */
         .education-grid {
             display: grid;
