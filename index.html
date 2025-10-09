@@ -2229,6 +2229,34 @@
             box-shadow: 0 5px 15px rgba(0, 212, 255, 0.2);
         }
 
+        .publication-citation {
+            margin-bottom: 1.5rem;
+        }
+
+        .citation-count {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 107, 107, 0.1);
+            color: #ff6b6b;
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid rgba(255, 107, 107, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .citation-count:hover {
+            background: rgba(255, 107, 107, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.2);
+        }
+
+        .citation-count i {
+            font-size: 0.8rem;
+        }
+
         /* Education Section */
         .education-grid {
             display: grid;
@@ -4030,16 +4058,36 @@
                 </div>
                 <div class="publication-item">
                     <h3 class="publication-title">Enhancing Control in Manufacturing and Microgrid Systems: Deep Reinforcement Learning with Double Q-Learning</h3>
-                    <p class="publication-authors"><strong>Ballouch et al.</strong></p>
+                    <p class="publication-authors"><strong>Mohamed Ballouch</strong>, et al.</p>
                     <p class="publication-details">2023 14th International Conference on Intelligent Systems: Theories and Applications (SITA), Casablanca, Morocco, pp. 1-7</p>
+                    <p class="publication-abstract">This research presents an advanced approach to manufacturing and microgrid control systems using deep reinforcement learning with double Q-learning techniques. The study addresses the challenges of coordinating industrial operations with energy management systems to achieve optimal performance and efficiency.</p>
+                    <div class="publication-keywords">
+                        <span class="keyword">Deep Reinforcement Learning</span>
+                        <span class="keyword">Double Q-Learning</span>
+                        <span class="keyword">Manufacturing Systems</span>
+                        <span class="keyword">Microgrid Control</span>
+                        <span class="keyword">Energy Management</span>
+                    </div>
                     <a href="https://doi.org/10.1109/SITA60746.2023.10373737" class="publication-link" target="_blank">
                         <i class="fas fa-external-link-alt"></i> View Paper
                     </a>
                 </div>
                 <div class="publication-item">
                     <h3 class="publication-title">Forecasting Call Center Arrivals Using Machine Learning</h3>
-                    <p class="publication-authors"><strong>Ballouch et al.</strong></p>
-                    <p class="publication-details">Osmaniye Korkut Ata University Journal of Natural and Applied Sciences, vol. 4, no. 1, pp. 96–101</p>
+                    <p class="publication-authors"><strong>Mohamed Ballouch</strong>, Fatih Akay, Sevtap Erdem, Mesut Tartuk, Taha Furkan Nurdağ, Hasan Hüseyin Yurdagül</p>
+                    <p class="publication-details">Osmaniye Korkut Ata University Journal of Natural and Applied Sciences, Year 2021, Volume: 4 Issue: 1, pp. 96-101</p>
+                    <p class="publication-abstract">A call center is an office equipped to handle a large volume of telephone calls for an organization, for which the ability to forecast calls is a key factor. By forecasting the number of calls accurately, a company can plan staffing needs, meet service level requirements, improve customer satisfaction and benefit from many other optimizations. In this paper, we develop Multilayer Perceptron (MLP) and Long-Short Term Memory (LSTM) based models combined with time lags to forecast the number of call arrivals in a call center. We forecast 12, 24, 36 and 48 values ahead and the performance of the forecasting models has been evaluated using the Mean Absolute Error (MAE). The MLP based model results show that the MAE values change between 1,50 and 13,58 and LSTM based model results show that the MAE values change between 19,99 and 66,74.</p>
+                    <div class="publication-keywords">
+                        <span class="keyword">Machine Learning</span>
+                        <span class="keyword">Call Center</span>
+                        <span class="keyword">Forecasting</span>
+                        <span class="keyword">Time Lag</span>
+                        <span class="keyword">LSTM</span>
+                        <span class="keyword">MLP</span>
+                    </div>
+                    <div class="publication-citation">
+                        <span class="citation-count"><i class="fas fa-quote-left"></i> Cited By: 1</span>
+                    </div>
                     <a href="https://doi.org/10.47495/okufbed.824870" class="publication-link" target="_blank">
                         <i class="fas fa-external-link-alt"></i> View Paper
                     </a>
@@ -4658,5 +4706,8 @@
             setTimeout(typeWriter, 1000);
         });
     </script>
+
+    <!-- Enhanced JavaScript functionality -->
+    <script src="script.js"></script>
 </body>
 </html>

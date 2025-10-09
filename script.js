@@ -765,14 +765,27 @@ function initPreloader() {
     `;
     document.body.prepend(preloader);
     
-    // Hide preloader when page is loaded
-    window.addEventListener('load', () => {
-        setTimeout(() => {
+    // Function to hide preloader
+    const hidePreloader = () => {
+        if (preloader && preloader.parentNode) {
             preloader.style.opacity = '0';
             preloader.style.visibility = 'hidden';
             document.body.classList.add('loaded');
-        }, 500);
-    });
+            
+            // Remove from DOM after animation
+            setTimeout(() => {
+                if (preloader.parentNode) {
+                    preloader.parentNode.removeChild(preloader);
+                }
+            }, 500);
+        }
+    };
+    
+    // Hide preloader when page is loaded
+    window.addEventListener('load', hidePreloader);
+    
+    // Fallback: force hide after 3 seconds to prevent infinite loading
+    setTimeout(hidePreloader, 3000);
 }
 
 // Performance optimization
@@ -1097,36 +1110,6 @@ function preloadCriticalResources() {
             });
         });
     }
-}
-
-// Enhanced preloader with fade-out effect
-function initPreloader() {
-    const preloader = document.getElementById('preloader');
-    if (!preloader) return;
-
-    // Show preloader immediately
-    preloader.style.display = 'flex';
-    
-    // Hide preloader when page is fully loaded
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            preloader.classList.add('hidden');
-            
-            // Remove from DOM after animation
-            setTimeout(() => {
-                if (preloader.parentNode) {
-                    preloader.parentNode.removeChild(preloader);
-                }
-            }, 300);
-        }, 500); // Small delay to ensure everything is ready
-    });
-    
-    // Fallback: hide preloader after 3 seconds regardless
-    setTimeout(() => {
-        if (preloader && !preloader.classList.contains('hidden')) {
-            preloader.classList.add('hidden');
-        }
-    }, 3000);
 }
 
 // Handle page load
