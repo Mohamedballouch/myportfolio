@@ -5,28 +5,81 @@ let ticking = false;
 
 // Wait for DOM to load
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM Content Loaded - Starting initialization...');
     
-    // Initialize all features
-    initSmoothScrolling();
-    initActiveNavigation();
-    initMobileMenu();
-    initAdvancedScrollAnimations();
-    initTypingAnimation();
-    initSkillsAnimation();
-    initSkillBars();
-    initContactForm();
-    initThemeToggle();
-    initLanguageToggle();
-    initParallaxEffect();
-    initMouseFollowEffect();
-    initPreloader();
-    initBackToTop();
-    initScrollProgress();
-    initParticles();
-    initEnhancedAnimations();
-    initProjectModals();
-    initAccessibility();
-    initBlogFeatures();
+    try {
+        // Initialize all features
+        initSmoothScrolling();
+        console.log('✓ Smooth scrolling initialized');
+        
+        initActiveNavigation();
+        console.log('✓ Active navigation initialized');
+        
+        initMobileMenu();
+        console.log('✓ Mobile menu initialized');
+        
+        initAdvancedScrollAnimations();
+        console.log('✓ Advanced scroll animations initialized');
+        
+        initTypingAnimation();
+        console.log('✓ Typing animation initialized');
+        
+        initSkillsAnimation();
+        console.log('✓ Skills animation initialized');
+        
+        initSkillBars();
+        console.log('✓ Skill bars initialized');
+        
+        initContactForm();
+        console.log('✓ Contact form initialized');
+        
+        initThemeToggle();
+        console.log('✓ Theme toggle initialized');
+        
+        initLanguageToggle();
+        console.log('✓ Language toggle initialized');
+        
+        initParallaxEffect();
+        console.log('✓ Parallax effect initialized');
+        
+        initMouseFollowEffect();
+        console.log('✓ Mouse follow effect initialized');
+        
+        // initPreloader(); // Temporarily disabled
+        
+        initBackToTop();
+        console.log('✓ Back to top initialized');
+        
+        initScrollProgress();
+        console.log('✓ Scroll progress initialized');
+        
+        initParticles();
+        console.log('✓ Particles initialized');
+        
+        initEnhancedAnimations();
+        console.log('✓ Enhanced animations initialized');
+        
+        initProjectModals();
+        console.log('✓ Project modals initialized');
+        
+        initAccessibility();
+        console.log('✓ Accessibility initialized');
+        
+        initBlogFeatures();
+        console.log('✓ Blog features initialized');
+        
+        console.log('🚀 All features initialized successfully!');
+        
+        // Ensure page is visible
+        document.body.style.visibility = 'visible';
+        document.body.style.opacity = '1';
+        
+    } catch (error) {
+        console.error('❌ Error during initialization:', error);
+        // Ensure page is still visible even if there's an error
+        document.body.style.visibility = 'visible';
+        document.body.style.opacity = '1';
+    }
     
     // Add performance optimization
     optimizePerformance();
