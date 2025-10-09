@@ -1447,8 +1447,8 @@
             }
         }
 
-        /* Blog/Articles Section */
-        #blog {
+        /* Certifications Section */
+        #certifications {
             background: rgba(10, 15, 25, 0.6);
             backdrop-filter: var(--backdrop-blur);
             -webkit-backdrop-filter: var(--backdrop-blur);
@@ -1462,89 +1462,20 @@
             margin-bottom: 3rem;
         }
 
-        .blog-controls {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            margin-bottom: 4rem;
-            align-items: center;
-        }
-
-        .search-container {
-            position: relative;
-            width: 100%;
-            max-width: 500px;
-        }
-
-        .search-container input {
-            width: 100%;
-            padding: 1.2rem 1.5rem 1.2rem 3rem;
-            border: 2px solid rgba(0, 212, 255, 0.2);
-            border-radius: 50px;
-            background: rgba(0, 212, 255, 0.05);
-            color: var(--text-light);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .search-container input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
-        }
-
-        .search-container i {
-            position: absolute;
-            left: 1.5rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-        }
-
-        .filter-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        .filter-tag {
-            padding: 0.8rem 1.5rem;
-            border: 2px solid rgba(0, 212, 255, 0.3);
-            border-radius: 25px;
-            background: transparent;
-            color: var(--text-light);
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .filter-tag:hover,
-        .filter-tag.active {
-            background: var(--gradient-1);
-            border-color: var(--primary-color);
-            color: var(--bg-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.3);
-        }
-
-        .articles-grid {
+        .certifications-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2.5rem;
             margin-bottom: 4rem;
         }
 
-        .article-card {
+        .certification-card {
             background: rgba(0, 212, 255, 0.05);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(0, 212, 255, 0.1);
             border-radius: 20px;
-            overflow: hidden;
+            padding: 2rem;
             transition: all 0.4s ease;
             position: relative;
             opacity: 0;
@@ -1552,190 +1483,127 @@
             animation: fadeInUp 0.6s ease forwards;
         }
 
-        .article-card:hover {
-            transform: translateY(-10px) scale(1.02);
+        .certification-card:hover {
+            transform: translateY(-10px);
             border-color: rgba(0, 212, 255, 0.3);
             box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
         }
 
-        .article-image {
-            position: relative;
-            width: 100%;
-            height: 200px;
-            overflow: hidden;
-        }
-
-        .article-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-
-        .article-card:hover .article-image img {
-            transform: scale(1.1);
-        }
-
-        .article-overlay {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: rgba(0, 0, 0, 0.8);
-            color: var(--text-light);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .article-content {
-            padding: 2rem;
-        }
-
-        .article-meta {
+        .certification-header {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
-        .article-category {
+        .cert-icon {
+            width: 60px;
+            height: 60px;
             background: var(--gradient-1);
-            color: var(--bg-dark);
-            padding: 0.3rem 0.8rem;
             border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
 
-        .article-meta time {
-            color: var(--text-muted);
-            font-size: 0.9rem;
+        .cert-icon i {
+            font-size: 1.5rem;
+            color: var(--bg-dark);
         }
 
-        .article-title {
+        .cert-info {
+            flex: 1;
+        }
+
+        .cert-title {
             font-size: 1.3rem;
             font-weight: 700;
             color: var(--text-light);
-            margin-bottom: 1rem;
-            line-height: 1.4;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
         }
 
-        .article-excerpt {
+        .cert-issuer {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .cert-details {
+            margin-top: 1rem;
+        }
+
+        .cert-description {
             color: var(--text-muted);
             line-height: 1.6;
             margin-bottom: 1.5rem;
         }
 
-        .article-tags {
+        .cert-meta {
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0, 212, 255, 0.1);
         }
 
-        .article-tags .tag {
+        .cert-date {
             background: rgba(0, 212, 255, 0.1);
             color: var(--primary-color);
             padding: 0.3rem 0.8rem;
             border-radius: 12px;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .cert-id {
+            color: var(--text-muted);
+            font-size: 0.9rem;
             font-weight: 500;
+            font-family: 'Fira Code', monospace;
         }
 
-        .read-more-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
+        /* Certification Animation Delays */
+        .certification-card:nth-child(1) { animation-delay: 0.1s; }
+        .certification-card:nth-child(2) { animation-delay: 0.2s; }
+        .certification-card:nth-child(3) { animation-delay: 0.3s; }
+        .certification-card:nth-child(4) { animation-delay: 0.4s; }
+        .certification-card:nth-child(5) { animation-delay: 0.5s; }
+        .certification-card:nth-child(6) { animation-delay: 0.6s; }
 
-        .read-more-btn:hover {
-            color: var(--secondary-color);
-            transform: translateX(5px);
-        }
-
-        .read-more-btn i {
-            transition: transform 0.3s ease;
-        }
-
-        .read-more-btn:hover i {
-            transform: translateX(5px);
-        }
-
-        .load-more-container {
-            text-align: center;
-        }
-
-        .load-more-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 1rem;
-            background: transparent;
-            border: 2px solid var(--primary-color);
-            color: var(--primary-color);
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .load-more-btn:hover {
-            background: var(--gradient-1);
-            color: var(--bg-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.3);
-        }
-
-        .load-more-btn i {
-            transition: transform 0.3s ease;
-        }
-
-        .load-more-btn:hover i {
-            transform: rotate(180deg);
-        }
-
-        /* Article Animation Delays */
-        .article-card:nth-child(1) { animation-delay: 0.1s; }
-        .article-card:nth-child(2) { animation-delay: 0.2s; }
-        .article-card:nth-child(3) { animation-delay: 0.3s; }
-        .article-card:nth-child(4) { animation-delay: 0.4s; }
-        .article-card:nth-child(5) { animation-delay: 0.5s; }
-        .article-card:nth-child(6) { animation-delay: 0.6s; }
-
-        /* Responsive Design for Blog */
+        /* Responsive Design for Certifications */
         @media (max-width: 768px) {
-            .blog-controls {
-                gap: 1.5rem;
-            }
-            
-            .search-container {
-                width: 100%;
-            }
-            
-            .filter-tags {
-                gap: 0.5rem;
-            }
-            
-            .filter-tag {
-                padding: 0.6rem 1rem;
-                font-size: 0.8rem;
-            }
-            
-            .articles-grid {
+            .certifications-grid {
                 grid-template-columns: 1fr;
                 gap: 2rem;
             }
             
-            .article-content {
+            .certification-card {
                 padding: 1.5rem;
+            }
+
+            .certification-header {
+                gap: 1rem;
+            }
+
+            .cert-icon {
+                width: 50px;
+                height: 50px;
+            }
+
+            .cert-icon i {
+                font-size: 1.2rem;
+            }
+
+            .cert-title {
+                font-size: 1.1rem;
+            }
+
+            .cert-meta {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
             }
         }
 
@@ -3463,7 +3331,7 @@
                     <li role="none"><a href="#projects" role="menuitem">Projects</a></li>
                     <li role="none"><a href="#publications" role="menuitem">Publications</a></li>
                     <li role="none"><a href="#education" role="menuitem">Education</a></li>
-                    <li role="none"><a href="#blog" role="menuitem">Blog</a></li>
+                    <li role="none"><a href="#certifications" role="menuitem">Certifications</a></li>
                     <li role="none"><a href="#contact" role="menuitem">Contact</a></li>
                 </ul>
                 <div class="nav-controls" role="toolbar" aria-label="Site controls">
@@ -3507,9 +3375,6 @@
                     </a>
                     <a href="https://github.com/Mohamedballouch" target="_blank" aria-label="GitHub profile (opens in new tab)">
                         <i class="fab fa-github" aria-hidden="true"></i>
-                    </a>
-                    <a href="mailto:balmo@gmail.com" aria-label="Send email">
-                        <i class="fas fa-envelope" aria-hidden="true"></i>
                     </a>
                 </div>
             </div>
@@ -4229,218 +4094,126 @@
         </div>
     </section>
 
-    <!-- Blog/Articles Section -->
-    <section id="blog" aria-labelledby="blog-heading">
+    <!-- Certifications Section -->
+    <section id="certifications" aria-labelledby="certifications-heading">
         <div class="container">
-            <h2 class="section-title" id="blog-heading">Technical Articles & Insights</h2>
-            <p class="section-subtitle">Exploring AI, Machine Learning, and emerging technologies</p>
+            <h2 class="section-title" id="certifications-heading">Professional Certifications</h2>
+            <p class="section-subtitle">Industry-recognized credentials and achievements</p>
             
-            <!-- Search and Filter Controls -->
-            <div class="blog-controls">
-                <div class="search-container">
-                    <input type="text" id="blog-search" placeholder="Search articles..." 
-                           aria-label="Search blog articles">
-                    <i class="fas fa-search" aria-hidden="true"></i>
+            <div class="certifications-grid">
+                <div class="certification-card">
+                    <div class="certification-header">
+                        <div class="cert-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <div class="cert-info">
+                            <h3 class="cert-title">Azure AI Engineer Associate</h3>
+                            <p class="cert-issuer">Microsoft</p>
+                        </div>
+                    </div>
+                    <div class="cert-details">
+                        <p class="cert-description">Certified in designing and implementing AI solutions using Azure Cognitive Services, Azure Machine Learning, and Knowledge Mining.</p>
+                        <div class="cert-meta">
+                            <span class="cert-date">2024</span>
+                            <span class="cert-id">AI-102</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="filter-tags">
-                    <button class="filter-tag active" data-category="all" 
-                            aria-pressed="true">All</button>
-                    <button class="filter-tag" data-category="ai-ml" 
-                            aria-pressed="false">AI/ML</button>
-                    <button class="filter-tag" data-category="llm" 
-                            aria-pressed="false">LLMs</button>
-                    <button class="filter-tag" data-category="computer-vision" 
-                            aria-pressed="false">Computer Vision</button>
-                    <button class="filter-tag" data-category="mlops" 
-                            aria-pressed="false">MLOps</button>
-                    <button class="filter-tag" data-category="tutorial" 
-                            aria-pressed="false">Tutorials</button>
+
+                <div class="certification-card">
+                    <div class="certification-header">
+                        <div class="cert-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="cert-info">
+                            <h3 class="cert-title">Machine Learning Specialist</h3>
+                            <p class="cert-issuer">AWS</p>
+                        </div>
+                    </div>
+                    <div class="cert-details">
+                        <p class="cert-description">Expert-level certification in designing, implementing, deploying, and maintaining machine learning solutions on AWS.</p>
+                        <div class="cert-meta">
+                            <span class="cert-date">2023</span>
+                            <span class="cert-id">MLS-C01</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
-            <!-- Articles Grid -->
-            <div class="articles-grid" role="list">
-                <article class="article-card" data-category="ai-ml llm" role="listitem">
-                    <div class="article-image">
-                        <img src="https://via.placeholder.com/400x250/1a1a2e/00d4ff?text=RAG+Systems" 
-                             alt="Building Production-Ready RAG Systems" loading="lazy">
-                        <div class="article-overlay">
-                            <span class="read-time">8 min read</span>
+
+                <div class="certification-card">
+                    <div class="certification-header">
+                        <div class="cert-icon">
+                            <i class="fab fa-google"></i>
+                        </div>
+                        <div class="cert-info">
+                            <h3 class="cert-title">Professional Machine Learning Engineer</h3>
+                            <p class="cert-issuer">Google Cloud</p>
                         </div>
                     </div>
-                    <div class="article-content">
-                        <div class="article-meta">
-                            <span class="article-category">AI/ML</span>
-                            <time datetime="2024-01-15">Jan 15, 2024</time>
-                        </div>
-                        <h3 class="article-title">Building Production-Ready RAG Systems</h3>
-                        <p class="article-excerpt">
-                            A comprehensive guide to implementing Retrieval-Augmented Generation systems 
-                            that scale. Learn about vector databases, embedding strategies, and optimization techniques.
-                        </p>
-                        <div class="article-tags">
-                            <span class="tag">LangChain</span>
-                            <span class="tag">Vector DB</span>
-                            <span class="tag">Production</span>
-                        </div>
-                        <a href="#" class="read-more-btn" aria-label="Read full article: Building Production-Ready RAG Systems">
-                            Read More <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                </article>
-                
-                <article class="article-card" data-category="computer-vision tutorial" role="listitem">
-                    <div class="article-image">
-                        <img src="https://via.placeholder.com/400x250/1a1a2e/00ff88?text=Computer+Vision" 
-                             alt="Advanced Object Detection with YOLO" loading="lazy">
-                        <div class="article-overlay">
-                            <span class="read-time">12 min read</span>
+                    <div class="cert-details">
+                        <p class="cert-description">Certified in designing, building, and productionizing ML models to solve business challenges using Google Cloud technologies.</p>
+                        <div class="cert-meta">
+                            <span class="cert-date">2023</span>
+                            <span class="cert-id">GCP-ML</span>
                         </div>
                     </div>
-                    <div class="article-content">
-                        <div class="article-meta">
-                            <span class="article-category">Computer Vision</span>
-                            <time datetime="2024-01-08">Jan 08, 2024</time>
+                </div>
+
+                <div class="certification-card">
+                    <div class="certification-header">
+                        <div class="cert-icon">
+                            <i class="fas fa-code"></i>
                         </div>
-                        <h3 class="article-title">Advanced Object Detection with YOLO</h3>
-                        <p class="article-excerpt">
-                            Deep dive into modern YOLO architectures and training strategies. 
-                            From YOLOv8 to custom dataset preparation and model optimization.
-                        </p>
-                        <div class="article-tags">
-                            <span class="tag">YOLO</span>
-                            <span class="tag">PyTorch</span>
-                            <span class="tag">Detection</span>
-                        </div>
-                        <a href="#" class="read-more-btn" aria-label="Read full article: Advanced Object Detection with YOLO">
-                            Read More <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                </article>
-                
-                <article class="article-card" data-category="mlops tutorial" role="listitem">
-                    <div class="article-image">
-                        <img src="https://via.placeholder.com/400x250/1a1a2e/ff6b6b?text=MLOps" 
-                             alt="MLOps Best Practices for Model Deployment" loading="lazy">
-                        <div class="article-overlay">
-                            <span class="read-time">10 min read</span>
+                        <div class="cert-info">
+                            <h3 class="cert-title">TensorFlow Developer</h3>
+                            <p class="cert-issuer">TensorFlow</p>
                         </div>
                     </div>
-                    <div class="article-content">
-                        <div class="article-meta">
-                            <span class="article-category">MLOps</span>
-                            <time datetime="2024-01-01">Jan 01, 2024</time>
-                        </div>
-                        <h3 class="article-title">MLOps Best Practices for Model Deployment</h3>
-                        <p class="article-excerpt">
-                            Essential patterns for deploying machine learning models at scale. 
-                            CI/CD pipelines, monitoring, and automated retraining strategies.
-                        </p>
-                        <div class="article-tags">
-                            <span class="tag">Docker</span>
-                            <span class="tag">Azure ML</span>
-                            <span class="tag">CI/CD</span>
-                        </div>
-                        <a href="#" class="read-more-btn" aria-label="Read full article: MLOps Best Practices for Model Deployment">
-                            Read More <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                </article>
-                
-                <article class="article-card" data-category="llm ai-ml" role="listitem">
-                    <div class="article-image">
-                        <img src="https://via.placeholder.com/400x250/1a1a2e/ffd93d?text=LLM+Fine-tuning" 
-                             alt="Fine-tuning Large Language Models" loading="lazy">
-                        <div class="article-overlay">
-                            <span class="read-time">15 min read</span>
+                    <div class="cert-details">
+                        <p class="cert-description">Demonstrated proficiency in using TensorFlow to solve deep learning and ML problems across computer vision, NLP, and time series.</p>
+                        <div class="cert-meta">
+                            <span class="cert-date">2023</span>
+                            <span class="cert-id">TF-DEV</span>
                         </div>
                     </div>
-                    <div class="article-content">
-                        <div class="article-meta">
-                            <span class="article-category">LLMs</span>
-                            <time datetime="2023-12-20">Dec 20, 2023</time>
+                </div>
+
+                <div class="certification-card">
+                    <div class="certification-header">
+                        <div class="cert-icon">
+                            <i class="fas fa-robot"></i>
                         </div>
-                        <h3 class="article-title">Fine-tuning Large Language Models</h3>
-                        <p class="article-excerpt">
-                            Parameter-efficient fine-tuning techniques for adapting LLMs to specific domains. 
-                            LoRA, QLoRA, and practical implementation strategies.
-                        </p>
-                        <div class="article-tags">
-                            <span class="tag">LoRA</span>
-                            <span class="tag">Hugging Face</span>
-                            <span class="tag">Fine-tuning</span>
-                        </div>
-                        <a href="#" class="read-more-btn" aria-label="Read full article: Fine-tuning Large Language Models">
-                            Read More <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                </article>
-                
-                <article class="article-card" data-category="ai-ml tutorial" role="listitem">
-                    <div class="article-image">
-                        <img src="https://via.placeholder.com/400x250/1a1a2e/a8b2c7?text=Multi-modal+AI" 
-                             alt="Building Multi-modal AI Applications" loading="lazy">
-                        <div class="article-overlay">
-                            <span class="read-time">14 min read</span>
+                        <div class="cert-info">
+                            <h3 class="cert-title">Deep Learning Specialization</h3>
+                            <p class="cert-issuer">Coursera - DeepLearning.AI</p>
                         </div>
                     </div>
-                    <div class="article-content">
-                        <div class="article-meta">
-                            <span class="article-category">AI/ML</span>
-                            <time datetime="2023-12-10">Dec 10, 2023</time>
-                        </div>
-                        <h3 class="article-title">Building Multi-modal AI Applications</h3>
-                        <p class="article-excerpt">
-                            Combining vision and language models for powerful multi-modal applications. 
-                            CLIP, BLIP, and practical implementation examples.
-                        </p>
-                        <div class="article-tags">
-                            <span class="tag">Multi-modal</span>
-                            <span class="tag">CLIP</span>
-                            <span class="tag">Vision-Language</span>
-                        </div>
-                        <a href="#" class="read-more-btn" aria-label="Read full article: Building Multi-modal AI Applications">
-                            Read More <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                </article>
-                
-                <article class="article-card" data-category="tutorial ai-ml" role="listitem">
-                    <div class="article-image">
-                        <img src="https://via.placeholder.com/400x250/1a1a2e/6c5ce7?text=Prompt+Engineering" 
-                             alt="Advanced Prompt Engineering Techniques" loading="lazy">
-                        <div class="article-overlay">
-                            <span class="read-time">9 min read</span>
+                    <div class="cert-details">
+                        <p class="cert-description">Comprehensive specialization covering neural networks, CNNs, RNNs, and advanced deep learning techniques and architectures.</p>
+                        <div class="cert-meta">
+                            <span class="cert-date">2022</span>
+                            <span class="cert-id">DL-SPEC</span>
                         </div>
                     </div>
-                    <div class="article-content">
-                        <div class="article-meta">
-                            <span class="article-category">AI/ML</span>
-                            <time datetime="2023-11-25">Nov 25, 2023</time>
+                </div>
+
+                <div class="certification-card">
+                    <div class="certification-header">
+                        <div class="cert-icon">
+                            <i class="fas fa-language"></i>
                         </div>
-                        <h3 class="article-title">Advanced Prompt Engineering Techniques</h3>
-                        <p class="article-excerpt">
-                            Master the art of prompt engineering with advanced techniques. 
-                            Chain-of-thought, few-shot learning, and prompt optimization strategies.
-                        </p>
-                        <div class="article-tags">
-                            <span class="tag">Prompting</span>
-                            <span class="tag">GPT</span>
-                            <span class="tag">Optimization</span>
+                        <div class="cert-info">
+                            <h3 class="cert-title">Natural Language Processing</h3>
+                            <p class="cert-issuer">Coursera - DeepLearning.AI</p>
                         </div>
-                        <a href="#" class="read-more-btn" aria-label="Read full article: Advanced Prompt Engineering Techniques">
-                            Read More <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </a>
                     </div>
-                </article>
-            </div>
-            
-            <!-- Load More Button -->
-            <div class="load-more-container">
-                <button class="load-more-btn" aria-label="Load more articles">
-                    <span>Load More Articles</span>
-                    <i class="fas fa-chevron-down" aria-hidden="true"></i>
-                </button>
+                    <div class="cert-details">
+                        <p class="cert-description">Specialized certification in NLP techniques, transformers, attention mechanisms, and modern language model architectures.</p>
+                        <div class="cert-meta">
+                            <span class="cert-date">2022</span>
+                            <span class="cert-id">NLP-SPEC</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -4456,13 +4229,6 @@
                         <p>I'm always interested in discussing new opportunities, AI projects, or potential collaborations. Feel free to reach out!</p>
                         
                         <div class="contact-items">
-                            <div class="contact-item">
-                                <i class="fas fa-envelope"></i>
-                                <div>
-                                    <h4>Email</h4>
-                                    <a href="mailto:ballouch.mo@gmail.com">ballouch.mo@gmail.com</a>
-                                </div>
-                            </div>
                             <div class="contact-item">
                                 <i class="fab fa-linkedin"></i>
                                 <div>

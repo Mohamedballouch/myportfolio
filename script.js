@@ -65,9 +65,6 @@ document.addEventListener('DOMContentLoaded', function() {
         initAccessibility();
         console.log('✓ Accessibility initialized');
         
-        initBlogFeatures();
-        console.log('✓ Blog features initialized');
-        
         console.log('🚀 All features initialized successfully!');
         
         // Ensure page is visible
@@ -1379,108 +1376,9 @@ function initSkillBars() {
     animateSkillBars();
 }
 
-// Blog/Articles Functionality
-function initBlogFeatures() {
-    const searchInput = document.getElementById('blog-search');
-    const filterTags = document.querySelectorAll('.filter-tag');
-    const articles = document.querySelectorAll('.article-card');
-    const loadMoreBtn = document.querySelector('.load-more-btn');
-    
-    let currentFilter = 'all';
-    let searchTerm = '';
-    let visibleCount = 6; // Initially show 6 articles
-    
-    // Search functionality
-    if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            searchTerm = e.target.value.toLowerCase();
-            filterArticles();
-        });
-    }
-    
-    // Filter functionality
-    filterTags.forEach(tag => {
-        tag.addEventListener('click', () => {
-            // Update active state
-            filterTags.forEach(t => {
-                t.classList.remove('active');
-                t.setAttribute('aria-pressed', 'false');
-            });
-            tag.classList.add('active');
-            tag.setAttribute('aria-pressed', 'true');
-            
-            currentFilter = tag.getAttribute('data-category');
-            filterArticles();
-        });
-    });
-    
-    // Filter articles based on search and category
-    function filterArticles() {
-        let visibleArticles = 0;
-        
-        articles.forEach((article, index) => {
-            const categories = article.getAttribute('data-category');
-            const title = article.querySelector('.article-title').textContent.toLowerCase();
-            const excerpt = article.querySelector('.article-excerpt').textContent.toLowerCase();
-            const tags = Array.from(article.querySelectorAll('.tag')).map(tag => tag.textContent.toLowerCase()).join(' ');
-            
-            const matchesCategory = currentFilter === 'all' || categories.includes(currentFilter);
-            const matchesSearch = searchTerm === '' || 
-                title.includes(searchTerm) || 
-                excerpt.includes(searchTerm) || 
-                tags.includes(searchTerm);
-            
-            const shouldShow = matchesCategory && matchesSearch && visibleArticles < visibleCount;
-            
-            if (shouldShow) {
-                article.style.display = 'block';
-                article.style.animation = `fadeInUp 0.6s ease ${visibleArticles * 0.1}s forwards`;
-                visibleArticles++;
-            } else if (matchesCategory && matchesSearch) {
-                // Article matches but exceeds visible count
-                article.style.display = 'none';
-            } else {
-                article.style.display = 'none';
-            }
-        });
-        
-        // Update load more button visibility
-        const totalMatchingArticles = Array.from(articles).filter(article => {
-            const categories = article.getAttribute('data-category');
-            const title = article.querySelector('.article-title').textContent.toLowerCase();
-            const excerpt = article.querySelector('.article-excerpt').textContent.toLowerCase();
-            const tags = Array.from(article.querySelectorAll('.tag')).map(tag => tag.textContent.toLowerCase()).join(' ');
-            
-            const matchesCategory = currentFilter === 'all' || categories.includes(currentFilter);
-            const matchesSearch = searchTerm === '' || 
-                title.includes(searchTerm) || 
-                excerpt.includes(searchTerm) || 
-                tags.includes(searchTerm);
-            
-            return matchesCategory && matchesSearch;
-        }).length;
-        
-        if (loadMoreBtn) {
-            loadMoreBtn.style.display = totalMatchingArticles > visibleCount ? 'inline-flex' : 'none';
-        }
-    }
-    
-    // Load more functionality
-    if (loadMoreBtn) {
-        loadMoreBtn.addEventListener('click', () => {
-            visibleCount += 3; // Load 3 more articles
-            filterArticles();
-        });
-    }
-    
-    // Initial filter
-    filterArticles();
-}
-
 // Console Easter Egg with enhanced styling
 console.log('%c👋 Hey there! Thanks for checking out my portfolio!', 'font-size: 24px; color: #00d4ff; font-weight: bold;');
 console.log('%c🚀 Interested in working together? Let\'s connect!', 'font-size: 18px; color: #00ff88; font-weight: bold;');
-console.log('%c📧 Email: ballouch.mo@gmail.com', 'font-size: 16px; color: #a8b2c7;');
-console.log('%c💼 LinkedIn: https://linkedin.com/in/mohamed-ballouch', 'font-size: 16px; color: #a8b2c7;');
+console.log('%c LinkedIn: https://linkedin.com/in/mohamed-ballouch', 'font-size: 16px; color: #a8b2c7;');
 console.log('%c🐙 GitHub: https://github.com/Mohamedballouch', 'font-size: 16px; color: #a8b2c7;');
 console.log('%c✨ Portfolio built with modern web technologies and love for clean code!', 'font-size: 14px; color: #ff6b6b; font-style: italic;');

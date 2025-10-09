@@ -278,7 +278,6 @@ This project is open source and available under the [MIT License](LICENSE).
 ## 📞 Contact
 
 **Mohamed Ballouch**
-- Email: @gmail.com
 - LinkedIn: [mohamed-ballouch](https://linkedin.com/in/mohamed-ballouch)
 - GitHub: [Mohamedballouch](https://github.com/Mohamedballouch)
 

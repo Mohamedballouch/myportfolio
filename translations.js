@@ -12,6 +12,7 @@ const translations = {
             projects: "Projects",
             publications: "Publications",
             education: "Education",
+            certifications: "Certifications",
             contact: "Contact"
         },
         
@@ -131,6 +132,11 @@ const translations = {
         publications: {
             title: "Publications",
             items: {
+                integrated: {
+                    title: "Integrated Manufacturing-Microgrid Control Using Multi-Agent Deep Reinforcement Learning",
+                    details: "IFAC-PapersOnLine, Volume 59, Issue 10, 2025, Pages 1372-1377, ISSN 2405-8963",
+                    viewPaper: "View Paper"
+                },
                 reinforcement: {
                     title: "Enhancing Control in Manufacturing and Microgrid Systems: Deep Reinforcement Learning with Double Q-Learning",
                     details: "2023 14th International Conference on Intelligent Systems: Theories and Applications (SITA), Casablanca, Morocco, 2023",
@@ -193,6 +199,7 @@ const translations = {
             projects: "Projets",
             publications: "Publications",
             education: "Formation",
+            certifications: "Certifications",
             contact: "Contact"
         },
         
@@ -312,6 +319,11 @@ const translations = {
         publications: {
             title: "Publications",
             items: {
+                integrated: {
+                    title: "Contrôle Intégré Fabrication-Microréseaux Utilisant l'Apprentissage par Renforcement Profond Multi-Agents",
+                    details: "IFAC-PapersOnLine, Volume 59, Issue 10, 2025, Pages 1372-1377, ISSN 2405-8963",
+                    viewPaper: "Voir l'Article"
+                },
                 reinforcement: {
                     title: "Amélioration du Contrôle dans les Systèmes de Fabrication et Microréseaux : Apprentissage par Renforcement Profond avec Double Q-Learning",
                     details: "2023 14th International Conference on Intelligent Systems: Theories and Applications (SITA), Casablanca, Maroc, 2023",
@@ -466,7 +478,7 @@ class TranslationManager {
     
     updateNavigation() {
         const navLinks = document.querySelectorAll('.nav-links a');
-        const navKeys = ['home', 'about', 'skills', 'experience', 'projects', 'publications', 'education', 'contact'];
+        const navKeys = ['home', 'about', 'skills', 'experience', 'projects', 'publications', 'education', 'certifications', 'contact'];
         
         navLinks.forEach((link, index) => {
             if (navKeys[index]) {
@@ -476,11 +488,13 @@ class TranslationManager {
     }
     
     updateHeroSection() {
+        const heroTitle = document.querySelector('.hero-title');
         const heroSubtitle = document.querySelector('.hero-subtitle');
         const heroDescription = document.querySelector('.hero-description');
         const getInTouchBtn = document.querySelector('.btn-primary');
         const viewProjectsBtn = document.querySelector('.btn-secondary');
         
+        if (heroTitle) heroTitle.textContent = this.translate('hero.title');
         if (heroSubtitle) heroSubtitle.textContent = this.translate('hero.subtitle');
         if (heroDescription) heroDescription.textContent = this.translate('hero.description');
         if (getInTouchBtn) {
@@ -586,7 +600,7 @@ class TranslationManager {
         if (publicationsTitle) publicationsTitle.textContent = this.translate('publications.title');
         
         const publicationItems = document.querySelectorAll('.publication-item');
-        const publicationKeys = ['reinforcement', 'callCenter'];
+        const publicationKeys = ['integrated', 'reinforcement', 'callCenter'];
         
         publicationItems.forEach((item, index) => {
             if (publicationKeys[index]) {
