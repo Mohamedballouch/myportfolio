@@ -1360,90 +1360,269 @@
             opacity: 1;
         }
 
-        /* Skill Bars Styles */
-        .skill-bars {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            position: relative;
-            z-index: 1;
+        /* Interactive Skills Cards */
+        .skills-cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
         }
 
-        .skill-item {
-            background: rgba(0, 212, 255, 0.05);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 212, 255, 0.1);
-            border-radius: 15px;
-            padding: 1.5rem;
+        .skill-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 0;
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
 
-        .skill-item:hover {
-            transform: translateY(-5px);
-            border-color: rgba(0, 212, 255, 0.3);
-            box-shadow: 0 15px 35px rgba(0, 212, 255, 0.15);
-        }
-
-        .skill-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .skill-name {
-            font-weight: 600;
-            color: var(--text-light);
-            font-size: 1rem;
-        }
-
-        .skill-percentage {
-            font-weight: 700;
-            color: var(--primary-color);
-            font-size: 0.9rem;
-        }
-
-        .skill-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .skill-progress {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            border-radius: 4px;
-            transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skill-progress::after {
+        .skill-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            animation: shimmer 2s infinite;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-1);
+            transition: all 0.4s ease;
         }
 
-        @keyframes shimmer {
-            0% {
-                transform: translateX(-100%);
+        .skill-card[data-category="llm"]::before {
+            background: var(--gradient-2);
+        }
+
+        .skill-card[data-category="cloud"]::before {
+            background: var(--gradient-3);
+        }
+
+        .skill-card[data-category="data"]::before,
+        .skill-card[data-category="programming"]::before,
+        .skill-card[data-category="ai-specializations"]::before {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-color);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        .skill-card:hover::before {
+            height: 6px;
+            filter: brightness(1.2);
+        }
+
+        .card-header {
+            padding: 2rem 2rem 1rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            position: relative;
+        }
+
+        .card-icon i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .card-header h3 {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-badge {
+            display: inline-block;
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--primary-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .card-content {
+            padding: 0 2rem 1rem;
+        }
+
+        .skill-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            justify-content: center;
+        }
+
+        .skill-chip {
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid;
+        }
+
+        .skill-chip.expert {
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--secondary-color);
+            border-color: rgba(0, 255, 136, 0.3);
+        }
+
+        .skill-chip.advanced {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--primary-color);
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+
+        .skill-chip.intermediate {
+            background: rgba(255, 107, 107, 0.1);
+            color: var(--accent-color);
+            border-color: rgba(255, 107, 107, 0.3);
+        }
+
+        .skill-chip:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.2);
+        }
+
+        .card-footer {
+            padding: 1rem 2rem 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .proficiency-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .proficiency-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .proficiency-dots {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(0, 212, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .dot.filled {
+            background: var(--primary-color);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        /* Animation on hover */
+        .skill-card:hover .dot.filled {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Responsive Design for Skills Cards */
+        @media (max-width: 768px) {
+            .skills-cards-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                margin: 2rem 0;
             }
-            50% {
-                transform: translateX(100%);
+            
+            .skill-card {
+                margin: 0 auto;
+                max-width: 100%;
             }
-            100% {
-                transform: translateX(100%);
+            
+            .card-header {
+                padding: 1.5rem 1.5rem 1rem;
+            }
+            
+            .card-icon {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .card-icon i {
+                font-size: 1.3rem;
+            }
+            
+            .card-header h3 {
+                font-size: 1.2rem;
+            }
+            
+            .card-content {
+                padding: 0 1.5rem 1rem;
+            }
+            
+            .skill-chips {
+                gap: 0.6rem;
+            }
+            
+            .skill-chip {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.75rem;
+            }
+            
+            .card-footer {
+                padding: 1rem 1.5rem 1.5rem;
+            }
+            
+            .proficiency-label {
+                font-size: 0.8rem;
+            }
+            
+            .dot {
+                width: 6px;
+                height: 6px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .skills-cards-container {
+                gap: 1rem;
+            }
+            
+            .card-header {
+                padding: 1rem 1rem 0.5rem;
+            }
+            
+            .card-content {
+                padding: 0 1rem 0.5rem;
+            }
+            
+            .card-footer {
+                padding: 0.5rem 1rem 1rem;
+            }
+            
+            .skill-chips {
+                gap: 0.4rem;
+            }
+            
+            .skill-chip {
+                padding: 0.25rem 0.5rem;
+                font-size: 0.7rem;
             }
         }
 
@@ -3431,255 +3610,189 @@
     <!-- Skills Section -->
     <section id="skills" aria-labelledby="skills-heading">
         <div class="container">
-            <h2 class="section-title" id="skills-heading">Technical Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3><i class="fas fa-brain" aria-hidden="true"></i> AI/ML Frameworks</h3>
-                    <div class="skill-bars">
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">TensorFlow/Keras</span>
-                                <span class="skill-percentage">95%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="95" style="width: 0%"></div>
-                            </div>
+            <h2 class="section-title" id="skills-heading">Technical Expertise</h2>
+            <div class="skills-cards-container">
+                <!-- AI/ML Frameworks Card -->
+                <div class="skill-card" data-category="ai-ml">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-brain"></i>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">PyTorch</span>
-                                <span class="skill-percentage">90%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="90" style="width: 0%"></div>
-                            </div>
+                        <h3>AI/ML Frameworks</h3>
+                        <div class="card-badge">Core</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="skill-chips">
+                            <span class="skill-chip expert">TensorFlow/Keras</span>
+                            <span class="skill-chip expert">PyTorch</span>
+                            <span class="skill-chip advanced">Hugging Face</span>
+                            <span class="skill-chip expert">Scikit-learn</span>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Hugging Face</span>
-                                <span class="skill-percentage">88%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="88" style="width: 0%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Scikit-learn</span>
-                                <span class="skill-percentage">92%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="92" style="width: 0%"></div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="proficiency-indicator">
+                            <span class="proficiency-label">Proficiency</span>
+                            <div class="proficiency-dots">
+                                <span class="dot filled"></span>
+                                <span class="dot filled"></span>
+                                <span class="dot filled"></span>
+                                <span class="dot filled"></span>
+                                <span class="dot filled"></span>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="skill-category">
-                    <h3><i class="fas fa-robot" aria-hidden="true"></i> LLMs & Generative AI</h3>
-                    <div class="skill-bars">
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">LangChain</span>
-                                <span class="skill-percentage">95%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="95" style="width: 0%"></div>
-                            </div>
+
+                <!-- LLMs & GenAI Card -->
+                <div class="skill-card" data-category="llm">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-robot"></i>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">RAG Systems</span>
-                                <span class="skill-percentage">90%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="90" style="width: 0%"></div>
-                            </div>
+                        <h3>LLMs & GenAI</h3>
+                        <div class="card-badge">Specialty</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="skill-chips">
+                            <span class="skill-chip expert">LangChain</span>
+                            <span class="skill-chip advanced">RAG Systems</span>
+                            <span class="skill-chip advanced">OpenAI GPT</span>
+                            <span class="skill-chip expert">Prompt Engineering</span>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">OpenAI GPT</span>
-                                <span class="skill-percentage">88%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="88" style="width: 0%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Prompt Engineering</span>
-                                <span class="skill-percentage">92%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="92" style="width: 0%"></div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="proficiency-indicator">
+                            <span class="proficiency-label">Proficiency</span>
+                            <div class="proficiency-dots">
+                                <span class="dot filled"></span>
+                                <span class="dot filled"></span>
+                                <span class="dot filled"></span>
+                                <span class="dot filled"></span>
+                                <span class="dot filled"></span>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="skill-category">
-                    <h3><i class="fas fa-cogs" aria-hidden="true"></i> AI Specializations</h3>
-                    <div class="skill-bars">
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Computer Vision</span>
-                                <span class="skill-percentage">85%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="85" style="width: 0%"></div>
-                            </div>
+
+                <!-- AI Specializations Card -->
+                <div class="skill-card" data-category="ai-specializations">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-cogs"></i>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">NLP</span>
-                                <span class="skill-percentage">90%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="90" style="width: 0%"></div>
-                            </div>
+                        <h3>AI Specializations</h3>
+                        <div class="card-badge">Advanced</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="skill-chips">
+                            <span class="skill-chip advanced">Computer Vision</span>
+                            <span class="skill-chip expert">NLP</span>
+                            <span class="skill-chip intermediate">Multimodal Models</span>
+                            <span class="skill-chip intermediate">Reinforcement Learning</span>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Multimodal Models</span>
-                                <span class="skill-percentage">80%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="80" style="width: 0%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Reinforcement Learning</span>
-                                <span class="skill-percentage">75%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="75" style="width: 0%"></div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="proficiency-indicator">
+                            <span class="proficiency-label">Proficiency</span>
+                            <div class="proficiency-dots">
+                                <span class="dot filled"></span>
+                                <span class="dot filled"></span>
+                                <span class="dot filled"></span>
+                                <span class="dot filled"></span>
+                                <span class="dot"></span>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="skill-category">
-                    <h3><i class="fas fa-cloud" aria-hidden="true"></i> MLOps & Cloud</h3>
-                    <div class="skill-bars">
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Azure ML</span>
-                                <span class="skill-percentage">85%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="85" style="width: 0%"></div>
-                            </div>
+
+                <!-- MLOps & Cloud Card -->
+                <div class="skill-card" data-category="cloud">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-cloud"></i>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Docker</span>
-                                <span class="skill-percentage">80%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="80" style="width: 0%"></div>
-                            </div>
+                        <h3>MLOps & Cloud</h3>
+                        <div class="card-badge">DevOps</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="skill-chips">
+                            <span class="skill-chip advanced">Azure ML</span>
+                            <span class="skill-chip intermediate">Docker</span>
+                            <span class="skill-chip expert">FastAPI</span>
+                            <span class="skill-chip advanced">Git/CI-CD</span>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">FastAPI</span>
-                                <span class="skill-percentage">90%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="90" style="width: 0%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Git/CI-CD</span>
-                                <span class="skill-percentage">88%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="88" style="width: 0%"></div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="proficiency-indicator">
+                            <span class="proficiency-label">Proficiency</span>
+                            <div class="proficiency-dots">
+                                <span class="dot filled"></span>
+                                <span class="dot filled"></span>
+                                <span class="dot filled"></span>
+                                <span class="dot filled"></span>
+                                <span class="dot"></span>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="skill-category">
-                    <h3><i class="fas fa-database" aria-hidden="true"></i> Data & Tools</h3>
-                    <div class="skill-bars">
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Vector Databases</span>
-                                <span class="skill-percentage">85%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="85" style="width: 0%"></div>
-                            </div>
+
+                <!-- Data & Tools Card -->
+                <div class="skill-card" data-category="data">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-database"></i>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Python</span>
-                                <span class="skill-percentage">95%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="95" style="width: 0%"></div>
-                            </div>
+                        <h3>Data & Tools</h3>
+                        <div class="card-badge">Backend</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="skill-chips">
+                            <span class="skill-chip advanced">Vector Databases</span>
+                            <span class="skill-chip expert">Python</span>
+                            <span class="skill-chip intermediate">MongoDB</span>
+                            <span class="skill-chip intermediate">Elasticsearch</span>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">MongoDB</span>
-                                <span class="skill-percentage">80%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="80" style="width: 0%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Elasticsearch</span>
-                                <span class="skill-percentage">75%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="75" style="width: 0%"></div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="proficiency-indicator">
+                            <span class="proficiency-label">Proficiency</span>
+                            <div class="proficiency-dots">
+                                <span class="dot filled"></span>
+                                <span class="dot filled"></span>
+                                <span class="dot filled"></span>
+                                <span class="dot filled"></span>
+                                <span class="dot"></span>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="skill-category">
-                    <h3><i class="fas fa-code" aria-hidden="true"></i> Programming Languages</h3>
-                    <div class="skill-bars">
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Python</span>
-                                <span class="skill-percentage">95%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="95" style="width: 0%"></div>
-                            </div>
+
+                <!-- Programming Languages Card -->
+                <div class="skill-card" data-category="programming">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-code"></i>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">SQL</span>
-                                <span class="skill-percentage">88%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="88" style="width: 0%"></div>
-                            </div>
+                        <h3>Programming</h3>
+                        <div class="card-badge">Languages</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="skill-chips">
+                            <span class="skill-chip expert">Python</span>
+                            <span class="skill-chip advanced">SQL</span>
+                            <span class="skill-chip intermediate">JavaScript</span>
+                            <span class="skill-chip intermediate">Bash</span>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">JavaScript</span>
-                                <span class="skill-percentage">75%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="75" style="width: 0%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Bash</span>
-                                <span class="skill-percentage">80%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="80" style="width: 0%"></div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="proficiency-indicator">
+                            <span class="proficiency-label">Proficiency</span>
+                            <div class="proficiency-dots">
+                                <span class="dot filled"></span>
+                                <span class="dot filled"></span>
+                                <span class="dot filled"></span>
+                                <span class="dot filled"></span>
+                                <span class="dot"></span>
                             </div>
                         </div>
                     </div>
@@ -4398,6 +4511,113 @@
         // Start typing effect after page load
         window.addEventListener('load', () => {
             setTimeout(typeWriter, 1000);
+        });
+    </script>
+
+    <!-- Skills Cards Interaction Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add staggered animation to skill cards
+            const skillCards = document.querySelectorAll('.skill-card');
+            
+            // Intersection Observer for scroll animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }, index * 150);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            // Set initial state and observe cards
+            skillCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
+
+            // Add enhanced hover effects
+            skillCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    // Subtle tilt effect
+                    card.style.transform = 'translateY(-10px) rotateX(5deg)';
+                    
+                    // Enhance proficiency dots animation
+                    const dots = card.querySelectorAll('.dot.filled');
+                    dots.forEach((dot, index) => {
+                        setTimeout(() => {
+                            dot.style.animation = 'pulse 1.5s infinite';
+                        }, index * 100);
+                    });
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0) rotateX(0deg)';
+                    
+                    // Stop dot animations
+                    const dots = card.querySelectorAll('.dot.filled');
+                    dots.forEach(dot => {
+                        dot.style.animation = '';
+                    });
+                });
+            });
+
+            // Skill chip interactions
+            const skillChips = document.querySelectorAll('.skill-chip');
+            skillChips.forEach(chip => {
+                chip.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    
+                    // Add click ripple effect
+                    const ripple = document.createElement('span');
+                    ripple.style.cssText = `
+                        position: absolute;
+                        border-radius: 50%;
+                        background: rgba(255, 255, 255, 0.6);
+                        transform: scale(0);
+                        animation: ripple 0.6s linear;
+                        left: ${e.offsetX - 10}px;
+                        top: ${e.offsetY - 10}px;
+                        width: 20px;
+                        height: 20px;
+                        pointer-events: none;
+                    `;
+                    
+                    chip.style.position = 'relative';
+                    chip.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+
+            // Add ripple keyframes
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+                
+                .skill-card {
+                    perspective: 1000px;
+                }
+                
+                .skill-card:hover {
+                    transform-style: preserve-3d;
+                }
+            `;
+            document.head.appendChild(style);
         });
     </script>
 
