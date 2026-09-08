@@ -1,4 +1,6 @@
 import { factoryCopy } from "./translations.js";
+import { buildAIMachinery } from "./factory-ai.js";
+import { missions, missionUI, missionFrame, outputAt } from "./missions.js";
 import {
   stageAt,
   togglePlayback,
@@ -22,7 +24,7 @@ import {
     copy = words.descriptions,
     verbs = words.verbs;
   const state = {
-    sample: "chart",
+    sample: document.getElementById("pipeline-sample").value,
     mode: "idle",
     time: 0,
     speed: 1,
@@ -31,7 +33,10 @@ import {
     hover: -1,
     follow: true,
     open: false,
+    inspectedTool: -1,
   };
+  let aiMachinery,
+    missionSignature = "";
   const design = { accent: "#e99b50", grid: true, finish: "ceramic" };
   let ready = false,
     disposed = false,
@@ -66,6 +71,7 @@ import {
     state.selected = i;
     if (manual) {
       state.follow = false;
+      state.inspectedTool = -1;
       if (ready) {
         camTarget.focus = xs[i] * 0.18;
         camTarget.zoom = state.open ? 0.9 : 1.03;
@@ -78,6 +84,7 @@ import {
     );
     $(".f-inspector h3").textContent = `0${i + 1} / ${title[i]}`;
     $(".f-inspector p").textContent = copy[state.sample][i];
+    if (state.inspectedTool >= 0 && i === 2) showToolDetail();
     root.dataset.selected = String(i);
     root.dispatchEvent(
       new CustomEvent("factory:selection", {
@@ -87,6 +94,110 @@ import {
     );
     if (manual)
       announce(`${title[i]} ${words.selected}. ${copy[state.sample][i]}`);
+    updateMissionUI();
+  }
+  function showToolDetail() {
+    const language = document.documentElement.lang === "fr" ? "fr" : "en";
+    const tool = missions[state.sample].tools[state.inspectedTool];
+    $(".f-inspector h3").textContent =
+      `03 / ${title[2]} · ${tool.name[language]}`;
+    $(".f-inspector p").textContent = tool.detail[language];
+  }
+  function selectTool(index) {
+    selectStation(2, true);
+    state.inspectedTool = index;
+    showToolDetail();
+    updateMissionUI();
+    announce($(".f-inspector p").textContent);
+    if (ready) requestDraw();
+  }
+  function updateMissionUI(force = false) {
+    const language = document.documentElement.lang === "fr" ? "fr" : "en";
+    const ui = missionUI[language],
+      frame = missionFrame(state.sample, state.time),
+      mission = frame.mission;
+    const output = outputAt(state.sample, state.time, language);
+    const signature = [
+      language,
+      state.sample,
+      state.mode,
+      frame.stage,
+      frame.toolIndex,
+      state.inspectedTool,
+      frame.evidenceReady,
+      frame.reviewDone,
+      output,
+    ].join("|");
+    if (signature === missionSignature && !force) return;
+    missionSignature = signature;
+    $(".f-mission-label").textContent = ui.mission;
+    $(".f-mission-prompt").textContent = mission.prompt[language];
+    $(".f-demo-label").textContent = ui.example;
+    $(".f-source-label").textContent = ui.sourceInput;
+    $(".f-source-name").textContent = mission.document[language];
+    $(".f-source-excerpt").textContent = mission.excerpt[language];
+    $(".f-prepare-lane").textContent = ui.prepareLane;
+    $(".f-answer-lane").textContent = ui.answerLane;
+    $(".f-flow-lanes").dataset.phase = state.time < 6 ? "prepare" : "answer";
+    $(".f-evidence").hidden = !frame.evidenceReady;
+    $(".f-evidence-label").textContent = ui.evidence;
+    $(".f-evidence-text").textContent = mission.excerpt[language];
+    $(".f-evidence-source").textContent = mission.source[language];
+    $(".f-review-status").hidden = !frame.reviewDone;
+    $(".f-review-status").textContent = mission.review[language];
+    $(".f-trace").setAttribute("aria-label", ui.trace);
+    $$(".f-trace li").forEach((item, i) => {
+      item.dataset.active = String(frame.stage === i && !frame.complete);
+      item.dataset.done = String(frame.stage > i || frame.complete);
+      item.querySelector(".f-step-text").textContent =
+        mission.steps[i][language];
+      item.querySelector(".f-step-status").textContent =
+        frame.stage > i || frame.complete
+          ? "✓"
+          : String(i + 1).padStart(2, "0");
+      if (frame.stage === i) item.setAttribute("aria-current", "step");
+      else item.removeAttribute("aria-current");
+    });
+    $(".f-tools-label").textContent = ui.tools;
+    $(".f-output-label").textContent = ui.output;
+    $(".f-tools").setAttribute("aria-label", ui.tools);
+    $$(".f-tools button").forEach((button, i) => {
+      button.textContent = mission.tools[i].name[language];
+      button.setAttribute(
+        "aria-label",
+        `${ui.inspect}: ${mission.tools[i].name[language]}`,
+      );
+      button.setAttribute("aria-pressed", String(state.inspectedTool === i));
+      button.dataset.active = String(frame.toolIndex === i);
+    });
+    $(".f-tool-action").textContent =
+      frame.toolIndex >= 0
+        ? mission.tools[frame.toolIndex].action[language]
+        : frame.stage === 3
+          ? frame.reviewDone
+            ? mission.review[language]
+            : ui.checking
+          : ui.preparing;
+    $(".f-stream").textContent =
+      output ||
+      (frame.stage === 3
+        ? frame.reviewDone
+          ? mission.review[language]
+          : ui.checking
+        : state.time > 0
+          ? mission.steps[Math.max(0, frame.stage)][language] + "…"
+          : ui.waiting);
+    $(".f-stream").dataset.streaming = String(
+      frame.stage === 3 && !frame.complete,
+    );
+    $(".f-scene-legend").replaceChildren(
+      ...ui.legend.map((label, i) => {
+        const span = document.createElement("span");
+        span.dataset.signal = String(i);
+        span.textContent = label;
+        return span;
+      }),
+    );
   }
   function syncUI(force = false) {
     const stage = stageAt(state.time);
@@ -134,7 +245,8 @@ import {
     $(".f-result").hidden = state.mode !== "complete";
     if (state.mode === "complete")
       $(".f-result").textContent =
-        `${words.delivered} ${state.sample === "chart" ? words.chartResult : words.ragResult} ${words.illustrative}`;
+        `${words.delivered} · ${missions[state.sample].source[document.documentElement.lang === "fr" ? "fr" : "en"]} · ${words.illustrative}`;
+    updateMissionUI();
   }
   function localize() {
     words = factoryCopy[document.documentElement.lang] || factoryCopy.en;
@@ -181,6 +293,8 @@ import {
     renderer?.domElement.setAttribute("aria-label", words.canvas);
     selectStation(state.selected, false);
     syncUI();
+    updateMissionUI(true);
+    if (ready) requestDraw();
   }
   listen(window, "portfolio:language", localize);
   localize();
@@ -192,6 +306,9 @@ import {
   });
   $$(".f-station").forEach((b) =>
     listen(b, "click", () => selectStation(Number(b.dataset.station))),
+  );
+  $$(".f-tools button").forEach((button) =>
+    listen(button, "click", () => selectTool(Number(button.dataset.tool))),
   );
   try {
     THREE = await import("three");
@@ -474,7 +591,7 @@ import {
     box(g, 1.12, 0.025, 0.025, 0, 0.12, 0.637, ledMat, 0.004);
     plate(
       g,
-      `0${i + 1}  ${["INGEST", "REASON", "VERIFY", "DELIVER"][i]}`,
+      `0${i + 1}  ${["READ", "INDEX", "DRAFT", "REVIEW"][i]}`,
       0,
       0.06,
       0.639,
@@ -534,6 +651,7 @@ import {
   const intakeCover = group(intake, 0, 0.83, -0.32);
   box(intakeCover, 1.04, 0.12, 0.75, 0, 0, 0, ceramic);
   lift(intakeCover, [0, 0.7, -0.18]);
+  intakeCover.visible = false;
   box(intake, 0.12, 0.43, 0.14, -0.47, 0.64, -0.52, metal);
   box(intake, 0.12, 0.43, 0.14, 0.47, 0.64, -0.52, metal);
   const armPivot = group(intake, -0.49, 0.53, 0.32);
@@ -601,20 +719,20 @@ import {
   sourceCard.position.set(0.04, 0.65, 0.12);
   sourceCard.rotation.x = -0.67;
   intake.add(sourceCard);
-  // Model engine: ceramic cabinets, metallic rack drawers, spinning fans and a lit core.
+  // Knowledge library base and removable top. Searchable shelves are added below.
   const model = machines[1];
   box(model, 1.12, 0.12, 0.79, 0, 0.26, -0.12, dark, 0.035);
   lift(
-    box(model, 0.16, 1.36, 0.95, -0.6, 0.86, -0.12, ceramic),
+    box(model, 0.16, 0.58, 0.95, -0.6, 0.47, -0.12, ceramic),
     [-0.38, 0.03, 0],
   );
   lift(
-    box(model, 0.16, 1.36, 0.95, 0.6, 0.86, -0.12, ceramic),
+    box(model, 0.16, 0.58, 0.95, 0.6, 0.47, -0.12, ceramic),
     [0.38, 0.03, 0],
   );
   const rackFrame = group(model);
   lift(rackFrame, [0, -0.09, 0.5]);
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 2; i++) {
     box(rackFrame, 0.95, 0.19, 0.11, 0, 0.37 + i * 0.225, 0.345, metal, 0.012);
     for (let j = 0; j < 6; j++)
       box(
@@ -655,39 +773,10 @@ import {
       0.009,
     );
   }
-  const modelTop = group(model, 0, 1.6, -0.12);
-  box(modelTop, 1.4, 0.12, 1.05, 0, 0, 0, ceramic, 0.035);
-  lift(modelTop, [0, 0.9, 0]);
-  const fans = [];
-  for (const x of [-0.36, 0.36]) {
-    cylinder(modelTop, 0.23, 0.055, x, 0.087, 0, black, 24);
-    const fan = group(modelTop, x, 0.13, 0);
-    fans.push(fan);
-    for (let i = 0; i < 5; i++) {
-      const blade = group(fan);
-      blade.rotation.y = (i * Math.PI * 2) / 5;
-      box(blade, 0.08, 0.025, 0.18, 0, 0, 0.08, metal, 0.012);
-    }
-    cylinder(fan, 0.055, 0.07, 0, 0.01, 0, copper, 12);
-  }
-  const modelCore = group(model, 0, 1.08, -0.15);
-  cylinder(modelCore, 0.23, 0.78, 0, 0, 0, glass, 32);
-  const coreRings = [];
-  for (let i = 0; i < 3; i++) {
-    const ring = new THREE.Mesh(
-      resource(new THREE.TorusGeometry(0.245, 0.022, 8, 40)),
-      signal,
-    );
-    ring.rotation.x = Math.PI / 2;
-    ring.position.y = -0.28 + i * 0.28;
-    modelCore.add(ring);
-    coreRings.push(ring);
-  }
-  const coreNode = box(modelCore, 0.23, 0.23, 0.23, 0, 0, 0, signal, 0.045);
-  coreNode.rotation.z = Math.PI / 4;
-  const sidePanel = box(model, 1.07, 1.13, 0.05, 0, 0.91, -0.56, ceramic);
-  lift(sidePanel, [0, 0.12, -0.63]);
-  // Verification gate: scanner curtain, lenses and an opening protective hood.
+  const modelTop = group(model, 0, 1.87, -0.12);
+  box(modelTop, 1.18, 0.08, 0.78, 0, 0, 0, ceramic, 0.035);
+  lift(modelTop, [0, 0.6, 0]);
+  // Assistant workbench with a removable canopy.
   const inspection = machines[2];
   for (const x of [-0.48, 0.48]) {
     box(inspection, 0.18, 1.04, 0.7, x, 0.71, 0.03, pale);
@@ -707,44 +796,6 @@ import {
   box(scanTop, 1.18, 0.23, 0.83, 0, 0, 0, ceramic, 0.045);
   lift(scanTop, [0, 0.78, 0.08]);
   box(inspection, 0.7, 0.48, 0.12, 0, 0.48, -0.33, dark);
-  const scanLens = cylinder(scanTop, 0.16, 0.11, 0, -0.17, 0, metal, 24);
-  const lens = cylinder(scanTop, 0.115, 0.018, 0, -0.237, 0, signal, 24);
-  const beamMat = resource(
-    new THREE.MeshBasicMaterial({
-      color: design.accent,
-      transparent: true,
-      opacity: 0.17,
-      side: THREE.DoubleSide,
-      depthWrite: false,
-    }),
-  );
-  const scanner = new THREE.Mesh(
-    resource(new THREE.PlaneGeometry(0.78, 0.84)),
-    beamMat,
-  );
-  scanner.position.set(0, 0.71, 0.05);
-  inspection.add(scanner);
-  const scanEdge = box(
-    inspection,
-    0.78,
-    0.023,
-    0.023,
-    0,
-    0.55,
-    0.49,
-    signal,
-    0.003,
-  );
-  const checkLight = cylinder(
-    inspection,
-    0.073,
-    0.1,
-    0.42,
-    1.52,
-    0.05,
-    green,
-    16,
-  );
   // Delivery: motorized hatch and a rising application window.
   const delivery = machines[3];
   box(delivery, 1.17, 0.95, 0.9, 0, 0.69, -0.08, pale, 0.04);
@@ -776,12 +827,12 @@ import {
     c.fillRect(0, 0, W, 49);
     c.fillStyle = "#dbe8dd";
     c.font = "22px monospace";
-    c.fillText("INSIGHT / READY", 25, 33);
+    c.fillText("DRAFT / REVIEW", 25, 33);
     c.fillStyle = "#ce8947";
     c.fillRect(25, 76, 8, 132);
     c.fillStyle = "#37545b";
     c.font = "30px sans-serif";
-    c.fillText("A clearer answer.", 55, 108);
+    c.fillText("Answer + source [1]", 55, 108);
     c.fillStyle = "#9fb5ad";
     c.fillRect(55, 137, 368, 9);
     c.fillRect(55, 160, 310, 9);
@@ -796,7 +847,21 @@ import {
   appScreen.position.z = 0.032;
   app.add(appScreen);
   app.visible = false;
-  // A single sample changes form as it travels between real pieces of machinery.
+  aiMachinery = buildAIMachinery({
+    THREE,
+    factory,
+    machines,
+    box,
+    cylinder,
+    group,
+    plate,
+    resource,
+    material,
+    texture,
+    materials: { ceramic, dark, metal, signal, green, glass },
+  });
+  sourceMat.map = docsTexture;
+  // Documents travel only to the index. Questions use a separate search-and-answer route.
   const packet = group(factory, -3.95, 0.59, 0.93);
   const rawPacket = group(packet);
   box(rawPacket, 0.43, 0.075, 0.34, 0, 0, 0, pale, 0.02);
@@ -820,12 +885,6 @@ import {
       i === 1 ? signal : ceramic,
       0.012,
     );
-  const checkedPacket = group(packet);
-  box(checkedPacket, 0.35, 0.31, 0.32, 0, 0.12, 0, copper, 0.035);
-  box(checkedPacket, 0.27, 0.025, 0.25, 0, 0.295, 0, green, 0.006);
-  const outputPacket = group(packet);
-  box(outputPacket, 0.39, 0.29, 0.3, 0, 0.1, 0, pale, 0.03);
-  box(outputPacket, 0.4, 0.08, 0.315, 0, 0.12, 0, copper, 0.009);
   const sparks = [];
   for (let i = 0; i < 16; i++) {
     const p = box(factory, 0.032, 0.032, 0.032, 0, 0, 0, signal, 0.005);
@@ -932,6 +991,13 @@ import {
       stage = Math.min(3, Math.floor(t / 3)),
       phase = clamp((t - stage * 3) / 3, 0, 1),
       active = t > 0 && t < 12;
+    aiMachinery.update(missionFrame(state.sample, t), {
+      open: openAmount,
+      selectedTool: state.inspectedTool,
+      yaw: cam.yaw,
+      width: viewport.clientWidth,
+      language: document.documentElement.lang,
+    });
     liftParts.forEach((p) =>
       p.object.position.copy(p.base).addScaledVector(p.offset, openAmount),
     );
@@ -940,36 +1006,16 @@ import {
     packet.position.x = previousX + (xs[stage] - previousX) * movement;
     packet.position.y = 0.585 + 0.03 * pulse(phase, 0, 0.65);
     if (t === 12) packet.position.x = 3.95;
-    const form = t < 3 ? 0 : t < 6 ? 1 : t < 9 ? 2 : 3;
-    [rawPacket, tokenPacket, checkedPacket, outputPacket].forEach(
-      (g, i) => (g.visible = i === form),
-    );
-    packet.visible = t < 11.3;
-    tokenPacket.rotation.y = t * 1.5;
-    checkedPacket.rotation.y = 0;
-    rollers.forEach((r, i) => (r.rotation.y = -t * 5 + i * 0.08));
+    const form = t < 3 ? 0 : 1;
+    [rawPacket, tokenPacket].forEach((g, i) => (g.visible = i === form));
+    packet.visible = t < 6;
+    tokenPacket.rotation.y = 0;
+    rollers.forEach((r, i) => (r.rotation.y = -Math.min(t, 6) * 5 + i * 0.08));
     const intakeAction = pulse(t, 0, 3);
     arm.rotation.z = -0.2 + intakeAction * 0.65;
     forearm.rotation.z = -intakeAction * 0.5;
     sourceCard.position.y = 0.65 + intakeAction * 0.18;
     sourceCard.rotation.z = -intakeAction * 0.11;
-    fans.forEach(
-      (f, i) => (f.rotation.y = clamp(t - 3, 0, 3) * 9 * (i ? 1 : -1)),
-    );
-    coreNode.rotation.y = t > 3 ? Math.min(t - 3, 3) * 2 : 0;
-    coreRings.forEach((ring, i) => {
-      ring.scale.setScalar(
-        1 + (stage === 1 && active ? 0.08 * Math.sin(t * 7 + i) : 0),
-      );
-    });
-    const scanActive = t >= 6 && t < 9;
-    scanner.visible = scanActive || state.open;
-    scanner.position.z =
-      0.2 + (scanActive ? Math.sin((t - 6) * Math.PI * 2) * 0.28 : 0);
-    beamMat.opacity = scanActive ? 0.24 : 0.07;
-    scanEdge.position.y =
-      0.5 + (scanActive ? (0.5 + 0.5 * Math.sin((t - 6) * 4)) * 0.53 : 0);
-    checkLight.material = t >= 8.6 ? green : metal;
     const hatchOpen = smooth((t - 9) / 0.7) * Math.PI * 0.72;
     hatchPivot.rotation.x = -hatchOpen - openAmount * 0.28;
     app.visible = t >= 10;
@@ -986,10 +1032,10 @@ import {
         (state.stage === i && active ? 0.65 + 0.25 * Math.sin(t * 5) : 0);
     });
     floorLight.position.x = packet.position.x;
-    floorLight.intensity = active ? 1.2 : 0;
+    floorLight.intensity = active && t < 6 ? 1.2 : 0;
     sparks.forEach((p, i) => {
       const phase2 = (t * 0.7 + i / 16) % 1;
-      p.visible = active && phase > 0.45 && i < 10;
+      p.visible = active && t < 6 && phase > 0.45 && i < 10;
       p.position.set(
         xs[stage] + Math.cos(i * 2.4 + phase2 * 4) * (0.18 + phase2 * 0.27),
         0.64 + phase2 * 0.65,
@@ -1000,6 +1046,7 @@ import {
   }
   function resetPipeline() {
     resetPlayback(state);
+    state.inspectedTool = -1;
     selectStation(0, false);
     syncUI(true);
     requestDraw();
@@ -1009,6 +1056,8 @@ import {
     if (state.mode === "idle" || state.mode === "complete") {
       camTarget.focus = 0;
       camTarget.zoom = state.open ? 0.9 : 1;
+      state.inspectedTool = -1;
+      selectStation(0, false);
     }
     togglePlayback(state, motionQuery.matches);
     syncUI();
@@ -1040,7 +1089,7 @@ import {
   });
   listen(document.getElementById("pipeline-sample"), "change", (e) => {
     state.sample = e.target.value;
-    sourceMat.map = state.sample === "chart" ? sourceTexture : docsTexture;
+    sourceMat.map = docsTexture;
     sourceMat.needsUpdate = true;
     resetPipeline();
     announce(`${e.target.selectedOptions[0].textContent} ${words.selected}.`);
@@ -1086,7 +1135,7 @@ import {
   const raycaster = new THREE.Raycaster(),
     pointer = new THREE.Vector2();
   let drag = null;
-  function hit(event) {
+  function hitTarget(event) {
     const r = renderer.domElement.getBoundingClientRect();
     pointer.set(
       ((event.clientX - r.left) / r.width) * 2 - 1,
@@ -1094,14 +1143,20 @@ import {
     );
     raycaster.setFromCamera(pointer, camera);
     const hits = raycaster.intersectObjects(machines, true);
-    for (const h of hits) {
-      let obj = h.object;
+    if (hits.length) {
+      let obj = hits[0].object;
+      let tool = -1;
       while (obj && obj !== factory) {
-        if (Number.isInteger(obj.userData.station)) return obj.userData.station;
+        if (Number.isInteger(obj.userData.tool)) tool = obj.userData.tool;
+        if (Number.isInteger(obj.userData.station))
+          return { station: obj.userData.station, tool };
         obj = obj.parent;
       }
     }
-    return -1;
+    return { station: -1, tool: -1 };
+  }
+  function hit(event) {
+    return hitTarget(event).station;
   }
   function setHover(i) {
     if (state.hover === i) return;
@@ -1144,8 +1199,9 @@ import {
     if (renderer.domElement.hasPointerCapture(e.pointerId))
       renderer.domElement.releasePointerCapture(e.pointerId);
     if (!moved) {
-      const i = hit(e);
-      if (i >= 0) selectStation(i);
+      const { station, tool } = hitTarget(e);
+      if (tool >= 0) selectTool(tool);
+      else if (station >= 0) selectStation(station);
     }
     setHover(e.pointerType === "touch" ? -1 : hit(e));
   });

@@ -13,9 +13,9 @@ export function relatedProjects(projects, station) {
   const order =
     [
       ["social-data", "archive", "chart"],
-      ["chart", "bertopic", "electricity"],
+      ["archive", "insurance-rag", "agents"],
       ["insurance-rag", "agents", "chart"],
-      ["agents", "archive", "churn"],
+      ["agents", "insurance-rag", "chart"],
     ][station] || [];
   return projects
     .filter((project) => project.stations.includes(station))

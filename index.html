@@ -86,14 +86,18 @@
           </div>
         </div>
         <div class="factory-topline">
-          <p class="eyebrow" data-copy="factoryLabel">01 / THE FACTORY FLOOR</p>
+          <p class="eyebrow" data-copy="factoryLabel">
+            01 / THE DOCUMENT ASSISTANT
+          </p>
           <label class="sample-label"
-            ><span data-copy="sampleLabel">FOLLOW A PIPELINE</span
-            ><select id="pipeline-sample" aria-label="Choose a sample pipeline">
-              <option value="chart" data-copy="sampleChart">
-                Chart analysis
+            ><span data-copy="sampleLabel">CHOOSE A MISSION</span
+            ><select id="pipeline-sample" aria-label="Choose a mission">
+              <option value="insurance" data-copy="sampleInsurance">
+                Insurance document assistant
               </option>
-              <option value="rag" data-copy="sampleRag">Enterprise RAG</option>
+              <option value="rag" data-copy="sampleRag" selected>
+                Procurement copilot
+              </option>
             </select></label
           >
         </div>
@@ -101,6 +105,44 @@
           id="compact-ai-factory"
           aria-label="Interactive AI factory portfolio"
         >
+          <div class="f-mission">
+            <div class="f-source-input">
+              <span class="f-source-label">SOURCE DOCUMENT</span>
+              <strong class="f-source-name"
+                >Example purchasing policy · §1</strong
+              >
+              <p class="f-source-excerpt">
+                Equipment requests need the item, quantity, business purpose,
+                estimated cost, and manager review.
+              </p>
+            </div>
+            <div class="f-question-input">
+              <span class="f-mission-label">QUESTION TO THE ASSISTANT</span>
+              <p class="f-mission-prompt">
+                I need two monitors. Prepare a purchase request.
+              </p>
+              <span class="f-demo-label">SCRIPTED EXAMPLE</span>
+            </div>
+          </div>
+          <div class="f-flow-lanes">
+            <span class="f-prepare-lane">01–02 / PREPARE THE KNOWLEDGE</span
+            ><span class="f-answer-lane">03–04 / ANSWER A QUESTION</span>
+          </div>
+          <div class="f-toolbar">
+            <div class="f-actions">
+              <button type="button" class="f-button f-primary" disabled>
+                <span class="f-play-text">Run walkthrough</span
+                ><span class="f-play-icon" aria-hidden="true">↗</span></button
+              ><button
+                type="button"
+                class="f-button f-explode"
+                aria-pressed="false"
+                disabled
+              >
+                Open factory <span aria-hidden="true">+</span>
+              </button>
+            </div>
+          </div>
           <div class="f-stage">
             <div class="f-canvas">
               <div class="f-fallback">Assembling the factory…</div>
@@ -131,23 +173,10 @@
               </button>
             </div>
             <div class="f-scene-caption">
-              <span>ISOMETRIC / INTERACTIVE STUDY</span
+              <span class="f-scene-legend"
+                ><span>DOCUMENT PASSAGES</span> · <span>SEARCH REQUEST</span> ·
+                <span>CITED RESPONSE</span></span
               ><span class="f-process-label">READY WHEN YOU ARE</span>
-            </div>
-          </div>
-          <div class="f-toolbar">
-            <div class="f-actions">
-              <button type="button" class="f-button f-primary" disabled>
-                <span class="f-play-text">Run pipeline</span
-                ><span class="f-play-icon" aria-hidden="true">↗</span></button
-              ><button
-                type="button"
-                class="f-button f-explode"
-                aria-pressed="false"
-                disabled
-              >
-                Open factory <span aria-hidden="true">+</span>
-              </button>
             </div>
           </div>
           <div class="f-timeline">
@@ -164,9 +193,67 @@
               max="1000"
               value="0"
               step="1"
-              aria-label="Scrub the sample pipeline"
+              aria-label="Scrub the mission timeline"
               disabled
             /><span class="f-time-label">00:00 / 00:12</span>
+          </div>
+          <ol class="f-trace" aria-label="Execution trace">
+            <li data-trace="0">
+              <span class="f-step-status">01</span
+              ><span class="f-step-text">Read & split documents</span>
+            </li>
+            <li data-trace="1">
+              <span class="f-step-status">02</span
+              ><span class="f-step-text">Index the passages</span>
+            </li>
+            <li data-trace="2">
+              <span class="f-step-status">03</span
+              ><span class="f-step-text">Find evidence & draft</span>
+            </li>
+            <li data-trace="3">
+              <span class="f-step-status">04</span
+              ><span class="f-step-text">Check & deliver</span>
+            </li>
+          </ol>
+          <div class="f-console">
+            <div class="f-toolbelt">
+              <span class="f-console-label f-tools-label"
+                >ASSISTANT ACTIONS</span
+              >
+              <div
+                class="f-tools"
+                role="group"
+                aria-label="Inspect assistant actions"
+              >
+                <button type="button" data-tool="0" aria-pressed="false">
+                  Find policy</button
+                ><button type="button" data-tool="1" aria-pressed="false">
+                  Fill request</button
+                ><button type="button" data-tool="2" aria-pressed="false">
+                  Write reply
+                </button>
+              </div>
+              <p class="f-tool-action">
+                Read documents → index passages. Then the question starts a
+                search.
+              </p>
+              <div class="f-evidence" hidden>
+                <span class="f-console-label f-evidence-label"
+                  >RETRIEVED EVIDENCE</span
+                >
+                <blockquote class="f-evidence-text"></blockquote>
+                <span class="f-evidence-source"></span>
+              </div>
+            </div>
+            <div class="f-output">
+              <span class="f-console-label f-output-label"
+                >ANSWER & REVIEW</span
+              >
+              <p class="f-stream">
+                Run the walkthrough to follow the document and the question.
+              </p>
+              <p class="f-review-status" hidden></p>
+            </div>
           </div>
           <div class="f-result" hidden aria-live="polite"></div>
           <div class="f-stations" aria-label="Inspect a station">
@@ -176,36 +263,37 @@
               data-station="0"
               aria-pressed="true"
             >
-              <span>01</span>Data ingestion</button
+              <span>01</span>Read & split</button
             ><button
               type="button"
               class="f-station"
               data-station="1"
               aria-pressed="false"
             >
-              <span>02</span>Model engine</button
+              <span>02</span>Index passages</button
             ><button
               type="button"
               class="f-station"
               data-station="2"
               aria-pressed="false"
             >
-              <span>03</span>Quality check</button
+              <span>03</span>Find & draft</button
             ><button
               type="button"
               class="f-station"
               data-station="3"
               aria-pressed="false"
             >
-              <span>04</span>Deployment
+              <span>04</span>Check & deliver
             </button>
           </div>
           <div class="f-inspector">
             <div>
-              <h3>01 / Data ingestion</h3>
+              <h3>01 / Read & split</h3>
               <p>
-                Read the chart’s labels, visual marks, and structure before
-                interpreting its meaning.
+                Read the example purchasing policy and split it into searchable
+                passages, keeping the source and section reference with each
+                one.
               </p>
             </div>
             <a href="#work">Explore my work ↗</a>

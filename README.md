@@ -4,8 +4,11 @@ An interactive portfolio connecting an isometric AI factory to Mohamed’s real 
 
 ## Experience
 
-- Four clickable stations: ingestion, model engine, evaluation, deployment.
-- A robotic intake, moving conveyor, model core, scanner, and delivery hatch.
+- Four concrete jobs: read and split documents, index passages, find evidence and draft, check and deliver.
+- A document scanner, searchable shelves, an assistant workbench with search/form/writing tools, and a review clipboard replace abstract technology labels.
+- Two clearly separated flows: documents prepare the library; a question starts a search back to that library before evidence returns to the assistant.
+- Scripted procurement and insurance-document scenarios are inspired by real work. Each displays a fictional source excerpt and a cited answer. The procurement example flags missing purpose and cost instead of inventing values.
+- Click a 3D tool or its accessible button to inspect the action. The execution trace, evidence, checks, and word-by-word response stay synchronized with playback and scrubbing.
 - Drag to rotate, zoom controls, expanded machinery, pause/resume, speed control, and timeline scrubbing.
 - Related case studies at each station, plus a filterable eight-project collection.
 - Four employers, three publications, education, certifications, and technical skills.
@@ -34,17 +37,19 @@ The production site is generated in `dist/`. Relative asset URLs support both th
 
 ## Content and structure
 
-| File                        | Purpose                                                                |
-| --------------------------- | ---------------------------------------------------------------------- |
-| `index.html`                | Semantic page structure and accessible factory controls                |
-| `content.js`                | Bilingual projects, experience, skills, education and publication URLs |
-| `translations.js`           | English/French interface and factory copy                              |
-| `script.js`                 | Portfolio filters, dialogs, language and theme preferences             |
-| `views.js`                  | Escaped content rendering and station-to-project mapping               |
-| `factory.js`                | Three.js scene, machinery, camera, interactions and cleanup            |
-| `factory-state.js`          | Playback and reduced-motion transitions                                |
-| `styles.css`, `factory.css` | Responsive styling                                                     |
-| `tests/portfolio.test.mjs`  | Playback, content, localization, link and escaping checks              |
+| File                        | Purpose                                                                  |
+| --------------------------- | ------------------------------------------------------------------------ |
+| `index.html`                | Semantic page structure and accessible factory controls                  |
+| `content.js`                | Bilingual projects, experience, skills, education and publication URLs   |
+| `translations.js`           | English/French interface and factory copy                                |
+| `script.js`                 | Portfolio filters, dialogs, language and theme preferences               |
+| `views.js`                  | Escaped content rendering and station-to-project mapping                 |
+| `factory.js`                | Three.js scene, machinery, camera, interactions and cleanup              |
+| `factory-ai.js`             | Document scanner, searchable shelves, query/evidence routes and review   |
+| `missions.js`               | Bilingual scripted missions, tool descriptions, and deterministic output |
+| `factory-state.js`          | Playback and reduced-motion transitions                                  |
+| `styles.css`, `factory.css` | Responsive styling                                                       |
+| `tests/portfolio.test.mjs`  | Playback, content, localization, link and escaping checks                |
 
 Professional content comes from the supplied CV (updated April 2026) and the original portfolio. The supplied sources link projects to the GitHub profile, so project actions are explicitly labeled **GitHub profile**. No project-specific repository or live-demo URLs are invented. Enterprise work is described without exposing client code. The original CV, personal phone number and neighborhood are not included in the repository.
 
@@ -64,4 +69,4 @@ The publishing workflow is manual and restricted to `main`. It runs tests/build 
 
 ## Validation
 
-Automated checks cover playback, pausing, speed, scrubbing, reduced motion, independent station selection, all sourced work, bilingual completeness, output escaping, and local navigation targets. Run them before building. This branch has not been merged or deployed automatically.
+Automated checks cover playback, pausing, speed, scrubbing, reduced motion, independent station selection, question/search/review ordering, reversible response streaming, 3D connection endpoints in expanded view, all sourced work, bilingual completeness, output escaping, and local navigation targets. Run them before building. This branch has not been merged or deployed automatically.
