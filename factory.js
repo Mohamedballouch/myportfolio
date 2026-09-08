@@ -242,7 +242,7 @@ import {
     panel2.lookAt(0, 0, 0);
     envScene.add(panel2);
     const pmrem = new THREE.PMREMGenerator(renderer);
-    const envMap = pmrem.fromScene(envScene, 0.08);
+    const envMap = pmrem.fromScene(envScene);
     scene.environment = envMap.texture;
     allResources.add(envMap);
     pmrem.dispose();
