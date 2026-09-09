@@ -1,4 +1,4 @@
-import "./factory.js";
+import "./computer.js";
 import { copy } from "./translations.js";
 import {
   projects,
@@ -13,7 +13,6 @@ import {
   localized,
   projectCard,
   projectDetails,
-  relatedProjects,
 } from "./views.js";
 
 const $ = (selector) => document.querySelector(selector);
@@ -40,22 +39,12 @@ let theme = readPreference("theme");
 if (!["dark", "light"].includes(theme))
   theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 let filter = "all",
-  selectedProject = null;
+  selectedProject = null,
+  projectTrigger = null;
 const dialog = $("#project-dialog");
 const t = (value) => localized(value, language);
 const text = (value) => esc(t(value));
 
-function renderRelated(
-  station = Number($("#compact-ai-factory").dataset.selected || 0),
-) {
-  $(".f-related").setAttribute("aria-label", copy[language].related);
-  $(".f-related").innerHTML = relatedProjects(projects, station)
-    .map(
-      (p) =>
-        `<button type="button" data-project="${p.id}">${text(p.title)} ↗</button>`,
-    )
-    .join("");
-}
 function applyFilter() {
   $$(".work-card").forEach(
     (card) => (card.hidden = filter !== "all" && card.dataset.kind !== filter),
@@ -78,7 +67,6 @@ function render() {
     "aria-label",
     language === "en" ? "Switch to French" : "Passer en anglais",
   );
-  $("#pipeline-sample").setAttribute("aria-label", ui.sampleLabel);
   $(".work-filter").setAttribute(
     "aria-label",
     language === "fr" ? "Filtrer les réalisations" : "Filter work",
@@ -91,8 +79,8 @@ function render() {
   document.querySelector('meta[property="og:description"]').content = ui.meta;
   document.title =
     language === "fr"
-      ? "Mohamed Ballouch — La Fabrique IA"
-      : "Mohamed Ballouch — The AI Factory";
+      ? "Mohamed Ballouch — Ballouch OS"
+      : "Mohamed Ballouch — Ballouch OS";
   document.querySelector('meta[property="og:title"]').content = document.title;
   $("#work-grid").innerHTML = projects
     .map((p, i) => projectCard(p, i, language, ui))
@@ -130,7 +118,6 @@ function render() {
   $("#certifications").innerHTML =
     `<ul class="certification-list">${certifications.map((c) => `<li>${esc(c)}</li>`).join("")}</ul>`;
   if (selectedProject) renderDialog();
-  renderRelated();
   applyTheme();
   window.dispatchEvent(new CustomEvent("portfolio:language"));
 }
@@ -143,7 +130,7 @@ function applyTheme() {
       : `Switch to ${theme === "light" ? "dark" : "light"} theme`,
   );
   document.querySelector('meta[name="theme-color"]').content =
-    theme === "light" ? "#e9ece7" : "#131f24";
+    theme === "light" ? "#efeee8" : "#222824";
 }
 function renderDialog() {
   const project = projects.find((p) => p.id === selectedProject);
@@ -158,9 +145,10 @@ function renderDialog() {
     copy[language],
   );
 }
-function openProject(id) {
+function openProject(id, trigger) {
   if (!projects.some((p) => p.id === id)) return;
   selectedProject = id;
+  projectTrigger = trigger;
   renderDialog();
   window.dispatchEvent(new CustomEvent("portfolio:inspect"));
   if (!dialog.open) {
@@ -170,7 +158,7 @@ function openProject(id) {
 }
 document.addEventListener("click", (event) => {
   const button = event.target.closest("button[data-project]");
-  if (button) openProject(button.dataset.project);
+  if (button) openProject(button.dataset.project, button);
 });
 $("#dialog-close").addEventListener("click", () => dialog.close());
 dialog.addEventListener("click", (event) => {
@@ -187,6 +175,9 @@ dialog.addEventListener("click", (event) => {
 dialog.addEventListener("close", () => {
   document.body.style.overflow = "";
   selectedProject = null;
+  if (projectTrigger?.isConnected)
+    projectTrigger.focus({ preventScroll: true });
+  projectTrigger = null;
 });
 $("#language-toggle").addEventListener("click", () => {
   language = language === "en" ? "fr" : "en";
@@ -208,13 +199,6 @@ $$("[data-filter]").forEach((button) =>
         ? `${count} réalisations affichées.`
         : `${count} projects shown.`;
   }),
-);
-document.addEventListener("factory:selection", (event) =>
-  renderRelated(event.detail.station),
-);
-// Keep keyboard focus stable while someone explores the related case studies.
-$(".f-related").addEventListener("focusin", () =>
-  window.dispatchEvent(new CustomEvent("portfolio:inspect")),
 );
 $("#year").textContent = String(new Date().getFullYear());
 render();

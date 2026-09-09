@@ -9,24 +9,6 @@ export const escapeHTML = (value) =>
 export function localized(value, language = "en") {
   return typeof value === "string" ? value : (value[language] ?? value.en);
 }
-export function relatedProjects(projects, station) {
-  const order =
-    [
-      ["social-data", "archive", "chart"],
-      ["archive", "insurance-rag", "agents"],
-      ["insurance-rag", "agents", "chart"],
-      ["agents", "insurance-rag", "chart"],
-    ][station] || [];
-  return projects
-    .filter((project) => project.stations.includes(station))
-    .sort(
-      (a, b) =>
-        (order.includes(a.id) ? order.indexOf(a.id) : 99) -
-        (order.includes(b.id) ? order.indexOf(b.id) : 99),
-    )
-    .slice(0, 3);
-}
-
 function diagram(type, language) {
   const labels = {
     en: {

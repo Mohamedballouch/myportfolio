@@ -1,23 +1,23 @@
 :root {
   color-scheme: light;
-  --paper: #e9ece7;
-  --ink: #20343b;
-  --muted: #51686c;
-  --line: #bccac4;
+  --paper: #efeee8;
+  --ink: #313b32;
+  --muted: #666e60;
+  --line: #d0d2c6;
   --accent: #b06a2a;
   --signal: #e99b50;
   --soft: #e0e6df;
   --panel: #f4f6f0;
-  font-family: "DM Sans", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   scroll-behavior: smooth;
   scroll-padding-top: 40px;
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --paper: #131f24;
-  --ink: #e4ece8;
+  --paper: #222824;
+  --ink: #e9eade;
   --muted: #a7b9b9;
-  --line: #354b51;
+  --line: #465046;
   --accent: #efb575;
   --soft: #1c2d33;
   --panel: #21343a;
@@ -109,7 +109,7 @@ img {
 }
 .eyebrow {
   font:
-    12px/1.6 "Space Mono",
+    12px/1.6 "IBM Plex Mono",
     monospace;
   letter-spacing: 0.05em;
   margin: 0 0 18px;
@@ -129,7 +129,7 @@ img {
   align-items: center;
   gap: 12px;
   font:
-    12px/1.5 "Space Mono",
+    12px/1.5 "IBM Plex Mono",
     monospace;
   white-space: nowrap;
 }
@@ -141,7 +141,7 @@ img {
 .monogram {
   border: 1px solid var(--ink);
   font:
-    24px "Space Mono",
+    24px "IBM Plex Mono",
     monospace;
   letter-spacing: -2px;
   padding: 4px 8px;
@@ -167,407 +167,10 @@ img {
 #theme-toggle {
   font-size: 22px;
 }
-.factory-section {
-  max-width: 1440px;
-  margin: auto;
-  padding: 48px 4% 0;
-}
-.hero-top {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 40px;
-}
-.hero-top h1 {
-  font-size: clamp(48px, 7.5vw, 104px);
-  line-height: 0.98;
-  letter-spacing: -0.065em;
-  margin: 0;
-}
-.hero-top em {
-  color: var(--accent);
-  font-style: normal;
-}
-.hero-aside {
-  max-width: 280px;
-  padding-bottom: 5px;
-}
-.hero-aside p {
-  font-size: 16px;
-  margin-bottom: 16px;
-}
 .text-link {
   font-size: 14px;
   border-bottom: 1px solid var(--ink);
   padding-bottom: 5px;
-}
-.location {
-  display: block;
-  font:
-    12px "Space Mono",
-    monospace;
-  color: var(--muted);
-  margin-top: 27px;
-}
-.factory-topline {
-  margin-top: 40px;
-  padding-top: 22px;
-  border-top: 1px solid var(--line);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-}
-.factory-topline .eyebrow {
-  margin: 0;
-}
-.sample-label {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  font:
-    12px "Space Mono",
-    monospace;
-  color: var(--muted);
-}
-.sample-label select {
-  font:
-    14px "DM Sans",
-    sans-serif;
-  background: var(--paper);
-  color: var(--ink);
-  padding: 10px 34px 10px 13px;
-  border: 1px solid var(--line);
-  min-height: 44px;
-}
-#compact-ai-factory {
-  --f-paper: var(--paper);
-  --f-ink: var(--ink);
-  --f-muted: var(--muted);
-  --f-line: var(--line);
-  --f-soft: var(--soft);
-  --f-signal: var(--accent);
-  background: transparent;
-  border-radius: 0;
-  overflow: visible;
-}
-#compact-ai-factory .f-stage {
-  height: 500px;
-}
-#compact-ai-factory .f-mission {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: start;
-  gap: 35px;
-  padding: 26px 0 10px;
-}
-#compact-ai-factory .f-mission-label,
-#compact-ai-factory .f-source-label,
-#compact-ai-factory .f-demo-label,
-#compact-ai-factory .f-console-label {
-  font:
-    11px/1.5 "Space Mono",
-    monospace;
-  letter-spacing: 0.07em;
-  color: var(--muted);
-}
-#compact-ai-factory .f-mission-prompt {
-  font-size: clamp(17px, 2vw, 23px);
-  letter-spacing: -0.025em;
-  margin: 5px 0 0;
-  color: var(--ink);
-}
-#compact-ai-factory .f-demo-label {
-  display: inline-block;
-  flex: 0 0 auto;
-  border: 1px solid var(--line);
-  padding: 5px 9px;
-  margin-top: 12px;
-}
-#compact-ai-factory .f-source-name {
-  display: block;
-  color: var(--ink);
-  font-size: 16px;
-  font-weight: 500;
-  margin: 7px 0;
-}
-#compact-ai-factory .f-source-excerpt {
-  color: var(--muted);
-  font-size: 14px;
-  margin: 0;
-  max-width: 58ch;
-  border-left: 2px solid #67acb5;
-  padding-left: 13px;
-}
-#compact-ai-factory .f-question-input {
-  border-left: 1px solid var(--line);
-  padding-left: 30px;
-}
-#compact-ai-factory .f-flow-lanes {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-top: 12px;
-  font:
-    10px/1.7 "Space Mono",
-    monospace;
-  letter-spacing: 0.04em;
-  color: var(--muted);
-}
-#compact-ai-factory .f-flow-lanes span {
-  border-top: 2px solid var(--line);
-  padding-top: 9px;
-}
-#compact-ai-factory .f-flow-lanes[data-phase="prepare"] .f-prepare-lane {
-  border-color: #67acb5;
-  color: var(--ink);
-}
-#compact-ai-factory .f-flow-lanes[data-phase="answer"] .f-answer-lane {
-  border-color: var(--accent);
-  color: var(--ink);
-}
-#compact-ai-factory .f-evidence {
-  margin-top: 20px;
-  padding-top: 16px;
-  border-top: 1px solid #46616a;
-}
-#compact-ai-factory .f-evidence-text {
-  margin: 0 0 8px;
-  padding-left: 12px;
-  border-left: 2px solid #87d5de;
-  color: #d5e5e6;
-  font-size: 13px;
-  line-height: 1.6;
-}
-#compact-ai-factory .f-evidence-source {
-  color: #a8c4ca;
-  font:
-    10px/1.6 "Space Mono",
-    monospace;
-}
-#compact-ai-factory .f-review-status {
-  color: #f1bb82;
-  border-top: 1px solid #46616a;
-  padding-top: 15px;
-  margin: 16px 0 0;
-  font:
-    12px/1.7 "Space Mono",
-    monospace;
-}
-#compact-ai-factory .f-scene-legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-}
-#compact-ai-factory .f-scene-legend span {
-  color: var(--muted);
-}
-#compact-ai-factory .f-scene-legend span::before {
-  content: "";
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  margin-right: 7px;
-  background: #3ba7b5;
-}
-#compact-ai-factory .f-scene-legend [data-signal="1"]::before {
-  background: #dc923f;
-}
-#compact-ai-factory .f-scene-legend [data-signal="2"]::before {
-  background: #529e74;
-}
-#compact-ai-factory .f-trace {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  border-top: 1px solid var(--line);
-}
-#compact-ai-factory .f-trace li {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  min-width: 0;
-  padding: 17px 14px;
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--muted);
-  border-top: 2px solid transparent;
-}
-#compact-ai-factory .f-trace li:first-child {
-  padding-left: 0;
-}
-#compact-ai-factory .f-trace li[data-active="true"] {
-  border-top-color: var(--accent);
-  color: var(--ink);
-}
-#compact-ai-factory .f-step-status {
-  font:
-    11px/1.8 "Space Mono",
-    monospace;
-  color: var(--accent);
-}
-#compact-ai-factory .f-trace li[data-done="true"] .f-step-status {
-  color: #529e74;
-}
-#compact-ai-factory .f-console {
-  display: grid;
-  grid-template-columns: minmax(220px, 0.85fr) minmax(0, 1.15fr);
-  background: #1d3239;
-  border: 1px solid #46616a;
-  padding: 22px 24px;
-  gap: 30px;
-  color: #f0ede6;
-}
-#compact-ai-factory .f-console-label {
-  color: #a8c4ca;
-  display: block;
-  margin-bottom: 13px;
-}
-#compact-ai-factory .f-tools {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-#compact-ai-factory .f-tools button {
-  min-height: 44px;
-  border: 1px solid #577780;
-  background: #243f48;
-  color: #e4f3f3;
-  font:
-    12px "Space Mono",
-    monospace;
-  padding: 10px 13px;
-  cursor: pointer;
-}
-#compact-ai-factory .f-tools button:hover,
-#compact-ai-factory .f-tools button[aria-pressed="true"] {
-  border-color: #9bdee5;
-  box-shadow: inset 0 -2px #9bdee5;
-}
-#compact-ai-factory .f-tools button[data-active="true"] {
-  background: #efb579;
-  color: #1d3239;
-  border-color: #efb579;
-}
-#compact-ai-factory .f-tool-action {
-  font:
-    11px/1.7 "Space Mono",
-    monospace;
-  color: #a8c4ca;
-  margin: 12px 0 0;
-}
-#compact-ai-factory .f-output {
-  border-left: 1px solid #46616a;
-  padding-left: 30px;
-  min-width: 0;
-}
-#compact-ai-factory .f-stream {
-  font-size: 17px;
-  line-height: 1.65;
-  min-height: 4.95em;
-  margin: 0;
-  color: #f0ede6;
-}
-#compact-ai-factory .f-stream[data-streaming="true"]::after {
-  content: "▌";
-  color: #efb579;
-  margin-left: 3px;
-}
-#compact-ai-factory .f-scene-hint {
-  top: 20px;
-  left: 0;
-  font-size: 12px;
-  max-width: 35ch;
-}
-#compact-ai-factory .f-view-controls {
-  right: 0;
-  top: 20px;
-}
-#compact-ai-factory .f-view-controls button {
-  min-width: 44px;
-  min-height: 44px;
-  font-size: 13px;
-}
-#compact-ai-factory .f-scene-caption {
-  left: 0;
-  right: 0;
-  font-size: 12px;
-  bottom: 14px;
-}
-#compact-ai-factory .f-toolbar {
-  padding: 18px 0 12px;
-}
-#compact-ai-factory .f-button {
-  font-size: 14px;
-  min-height: 46px;
-  padding: 12px 20px;
-}
-#compact-ai-factory .f-primary {
-  min-width: 166px;
-}
-#compact-ai-factory .f-timeline {
-  padding: 0 0 20px;
-  gap: 15px;
-}
-#compact-ai-factory .f-time-label {
-  font-size: 12px;
-}
-#compact-ai-factory .f-stations {
-  margin: 0;
-}
-#compact-ai-factory .f-station {
-  padding: 20px 12px;
-  font-size: 15px;
-  min-height: 63px;
-  gap: 12px;
-}
-#compact-ai-factory .f-station:first-child {
-  padding-left: 0;
-}
-#compact-ai-factory .f-station span {
-  font-size: 12px;
-}
-#compact-ai-factory .f-inspector {
-  padding: 23px 0 15px;
-  grid-template-columns: 1fr auto;
-}
-#compact-ai-factory .f-inspector h3 {
-  font-size: 20px;
-}
-#compact-ai-factory .f-inspector p {
-  font-size: 15px;
-  max-width: 74ch;
-}
-#compact-ai-factory .f-inspector a {
-  font-size: 14px;
-}
-#compact-ai-factory .f-result {
-  font-size: 14px;
-  padding: 16px 20px;
-}
-#compact-ai-factory .f-related {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 0 0 20px;
-}
-#compact-ai-factory .f-related button {
-  background: transparent;
-  border: 1px solid var(--line);
-  padding: 10px 12px;
-  text-align: left;
-  font-size: 14px;
-  color: var(--ink);
-}
-.simulation-note {
-  font:
-    12px/1.65 "Space Mono",
-    monospace;
-  color: var(--muted);
-  margin: 0 0 22px;
 }
 .section-shell {
   max-width: 1440px;
@@ -646,7 +249,7 @@ img {
   position: absolute;
   top: 14px;
   font:
-    12px "Space Mono",
+    12px "IBM Plex Mono",
     monospace;
   color: var(--muted);
 }
@@ -690,7 +293,7 @@ img {
   flex-wrap: wrap;
   gap: 8px;
   font:
-    12px/1.5 "Space Mono",
+    12px/1.5 "IBM Plex Mono",
     monospace;
   color: var(--muted);
 }
@@ -770,7 +373,7 @@ img {
 }
 .career-date {
   font:
-    12px "Space Mono",
+    12px "IBM Plex Mono",
     monospace;
   color: var(--muted);
   display: block;
@@ -830,7 +433,7 @@ img {
 }
 .paper-year {
   font:
-    13px "Space Mono",
+    13px "IBM Plex Mono",
     monospace;
   color: var(--muted);
   padding-top: 6px;
@@ -871,7 +474,7 @@ img {
 }
 .credential p {
   font:
-    12px/1.6 "Space Mono",
+    12px/1.6 "IBM Plex Mono",
     monospace;
   color: var(--muted);
   margin: 0;
@@ -888,13 +491,13 @@ img {
 }
 .languages {
   font:
-    12px/1.8 "Space Mono",
+    12px/1.8 "IBM Plex Mono",
     monospace;
   margin-top: 24px;
   color: var(--muted);
 }
 .contact-section {
-  background: #20343b;
+  background: #313b32;
   color: #edf1e9;
   padding-top: 65px;
   padding-bottom: 65px;
@@ -933,7 +536,7 @@ img {
   justify-content: space-between;
   gap: 20px;
   font:
-    12px/1.6 "Space Mono",
+    12px/1.6 "IBM Plex Mono",
     monospace;
   color: var(--muted);
 }
@@ -1001,15 +604,9 @@ dialog::backdrop {
   .site-header nav {
     gap: 16px;
   }
-  .hero-aside {
-    max-width: 250px;
-  }
   .career-layout {
     grid-template-columns: 230px 1fr;
     gap: 6%;
-  }
-  #compact-ai-factory .f-inspector {
-    grid-template-columns: 1fr;
   }
   .skill-groups {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1033,116 +630,6 @@ dialog::backdrop {
     font-size: 13px;
     padding-top: 12px;
     border-top: 1px solid var(--line);
-  }
-  .factory-section {
-    padding: 35px 6% 0;
-  }
-  .hero-top {
-    display: block;
-  }
-  .hero-top h1 {
-    font-size: clamp(46px, 11vw, 78px);
-  }
-  .hero-aside {
-    max-width: 500px;
-    margin-top: 24px;
-  }
-  .location {
-    display: none;
-  }
-  .factory-topline {
-    margin-top: 32px;
-    align-items: start;
-    flex-direction: column;
-    gap: 16px;
-  }
-  .sample-label {
-    width: 100%;
-    justify-content: space-between;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-  .sample-label select {
-    font-size: 16px;
-  }
-  #compact-ai-factory .f-stage {
-    height: 350px;
-  }
-  #compact-ai-factory .f-scene-hint {
-    left: 0;
-    top: 14px;
-    font-size: 12px;
-  }
-  #compact-ai-factory .f-view-controls {
-    top: auto;
-    bottom: 42px;
-    right: 0;
-  }
-  #compact-ai-factory .f-scene-caption {
-    font-size: 12px;
-    bottom: 12px;
-    justify-content: flex-end;
-  }
-  #compact-ai-factory .f-scene-caption > .f-scene-legend {
-    display: none;
-  }
-  #compact-ai-factory .f-mission {
-    grid-template-columns: minmax(0, 1fr);
-    align-items: flex-start;
-    gap: 22px;
-  }
-  #compact-ai-factory .f-question-input {
-    border-left: 0;
-    padding-left: 0;
-  }
-  #compact-ai-factory .f-flow-lanes {
-    gap: 10px;
-    font-size: 9px;
-  }
-  #compact-ai-factory .f-trace {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  #compact-ai-factory .f-trace li {
-    padding: 12px 8px;
-    font-size: 12px;
-  }
-  #compact-ai-factory .f-trace li:nth-child(3) {
-    padding-left: 0;
-  }
-  #compact-ai-factory .f-console {
-    grid-template-columns: minmax(0, 1fr);
-    padding: 20px;
-    gap: 20px;
-  }
-  #compact-ai-factory .f-output {
-    border-left: 0;
-    border-top: 1px solid #46616a;
-    padding: 18px 0 0;
-  }
-  #compact-ai-factory .f-stream {
-    font-size: 15px;
-  }
-  #compact-ai-factory .f-stations {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  #compact-ai-factory .f-station {
-    font-size: 14px;
-    min-height: 60px;
-    padding: 15px 6px;
-    gap: 8px;
-  }
-  #compact-ai-factory .f-station:nth-child(3) {
-    padding-left: 0;
-  }
-  #compact-ai-factory .f-button {
-    font-size: 13px;
-    padding: 12px 14px;
-  }
-  #compact-ai-factory .f-primary {
-    min-width: 148px;
-  }
-  #compact-ai-factory .f-timeline {
-    gap: 10px;
   }
   .section-shell {
     padding: 52px 6%;
@@ -1230,27 +717,6 @@ dialog::backdrop {
   }
   .skill-groups {
     grid-template-columns: 1fr;
-  }
-  #compact-ai-factory .f-stage {
-    height: 300px;
-  }
-  #compact-ai-factory .f-button {
-    padding: 12px 10px;
-    font-size: 12px;
-    gap: 8px;
-  }
-  #compact-ai-factory .f-primary {
-    min-width: 130px;
-  }
-  .sample-label {
-    display: grid;
-  }
-  .sample-label select {
-    width: 100%;
-  }
-  #compact-ai-factory .f-station {
-    font-size: 12px;
-    gap: 6px;
   }
   .papers a {
     grid-template-columns: 1fr 20px;

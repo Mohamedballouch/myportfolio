@@ -1,22 +1,19 @@
-# Mohamed Ballouch — The AI Factory
+# Mohamed Ballouch — Ballouch OS
 
-An interactive portfolio connecting an isometric AI factory to Mohamed’s real enterprise work, independent projects, and research.
+A portfolio inside a vintage personal computer. The CRT desktop, project disks, keyboard and boot sequence connect to Mohamed’s real enterprise work, projects and research.
 
-## Experience
+## The experience
 
-- Four concrete jobs: read and split documents, index passages, find evidence and draft, check and deliver.
-- A document scanner, searchable shelves, an assistant workbench with search/form/writing tools, and a review clipboard replace abstract technology labels.
-- Two clearly separated flows: documents prepare the library; a question starts a search back to that library before evidence returns to the assistant.
-- Scripted procurement and insurance-document scenarios are inspired by real work. Each displays a fictional source excerpt and a cited answer. The procurement example flags missing purpose and cost instead of inventing values.
-- Click a 3D tool or its accessible button to inspect the action. The execution trace, evidence, checks, and word-by-word response stay synchronized with playback and scrubbing.
-- Drag to rotate, zoom controls, expanded machinery, pause/resume, speed control, and timeline scrubbing.
-- Related case studies at each station, plus a filterable eight-project collection.
-- Four employers, three publications, education, certifications, and technical skills.
-- English/French and light/dark preferences; keyboard-accessible project dialogs.
-- Reduced-motion mode advances through discrete stages. Rendering stops while the factory is off-screen or the page is hidden.
-- Contact uses real email and LinkedIn links. No simulated form delivery.
+- Three featured floppy disks animate into the drive and open a project window.
+- The Work directory contains all eight projects, with four entries per page. Overview and Toolkit views lead to complete case studies.
+- Desktop apps and physical keyboard keys open Work, About, Research and Contact.
+- Reboot replays a short, skippable sequence. The desktop is immediately usable on first visit.
+- Expand screen provides a larger reading surface; narrow screens reflow the desktop and disk collection.
+- English/French and light/dark preferences persist locally. Language changes preserve the selected project, tab and directory page.
+- Reduced motion bypasses disk and boot animations. Navigation cancels pending animation callbacks; boot controls and case-study dialogs preserve keyboard focus.
+- The page below the computer retains all projects, employers, skills, publications, education and certifications. Contact uses real email, LinkedIn and GitHub links.
 
-Pipeline playback is illustrative. It does not upload documents, run an AI model, or make inference requests. The factory loads as a separate Three.js bundle; the portfolio remains usable if WebGL is unavailable.
+The computer is an interface metaphor. There are no AI inference calls, document uploads, or fabricated form submissions. Its interface uses HTML/CSS and finite browser animations; no 3D runtime is shipped.
 
 ## Develop
 
@@ -33,40 +30,40 @@ npm run build
 npm run preview
 ```
 
-The production site is generated in `dist/`. Relative asset URLs support both the existing custom domain and a GitHub Pages repository subpath. The existing `CNAME` is also included in the build through `public/CNAME`.
+Vite generates the production site in `dist/`. Relative asset URLs support both the custom domain and a GitHub Pages repository subpath. `public/CNAME` preserves the existing custom domain in the build.
 
-## Content and structure
+## Maintain the portfolio
 
-| File                        | Purpose                                                                  |
-| --------------------------- | ------------------------------------------------------------------------ |
-| `index.html`                | Semantic page structure and accessible factory controls                  |
-| `content.js`                | Bilingual projects, experience, skills, education and publication URLs   |
-| `translations.js`           | English/French interface and factory copy                                |
-| `script.js`                 | Portfolio filters, dialogs, language and theme preferences               |
-| `views.js`                  | Escaped content rendering and station-to-project mapping                 |
-| `factory.js`                | Three.js scene, machinery, camera, interactions and cleanup              |
-| `factory-ai.js`             | Document scanner, searchable shelves, query/evidence routes and review   |
-| `missions.js`               | Bilingual scripted missions, tool descriptions, and deterministic output |
-| `factory-state.js`          | Playback and reduced-motion transitions                                  |
-| `styles.css`, `factory.css` | Responsive styling                                                       |
-| `tests/portfolio.test.mjs`  | Playback, content, localization, link and escaping checks                |
+| File                         | Purpose                                                                          |
+| ---------------------------- | -------------------------------------------------------------------------------- |
+| `content.js`                 | Canonical bilingual projects, experience, skills, education and publication URLs |
+| `translations.js`            | General portfolio interface copy                                                 |
+| `computer-copy.js`           | Bilingual desktop labels and featured disk text                                  |
+| `computer-views.js`          | Desktop windows and the directory, using the canonical content                   |
+| `computer-state.js`          | Navigation, pagination and cancellation of outdated animation completions        |
+| `computer.js`                | Disk insertion, boot, focus, localization and lifecycle cleanup                  |
+| `script.js`                  | Page content, filters, dialogs and preferences                                   |
+| `views.js`                   | Escaped project-card and case-study rendering                                    |
+| `index.html`                 | Page structure and computer controls                                             |
+| `styles.css`, `computer.css` | Responsive portfolio and computer styling                                        |
+| `tests/portfolio.test.mjs`   | Content, localization, navigation, cancellation and link checks                  |
 
-Professional content comes from the supplied CV (updated April 2026) and the original portfolio. The supplied sources link projects to the GitHub profile, so project actions are explicitly labeled **GitHub profile**. No project-specific repository or live-demo URLs are invented. Enterprise work is described without exposing client code. The original CV, personal phone number and neighborhood are not included in the repository.
+Professional content comes from the supplied CV (updated April 2026) and the original portfolio. Maintain translated records in `content.js`; the desktop directory and page cards use those same records. The three featured disk IDs are listed in `computer-views.js`.
 
-Update the objects in `content.js` to maintain case studies. Use both `en` and `fr` for translated text. Paper titles and certification names retain their official wording. Keep the PhD qualification as **Candidate** until completion is confirmed.
+The supplied sources link projects to the GitHub profile. Actions are explicitly labeled **GitHub profile** rather than inventing project-specific repositories or live demos. Enterprise work does not expose client code. The original CV, personal phone number and neighborhood are not committed. Paper and certification titles retain their official wording. Keep the PhD qualification as **Candidate** until completion is confirmed.
 
 ## GitHub workflow
 
-`Validate portfolio` runs tests and builds every pushed branch and pull request. It uploads the production output as `portfolio-static-site` for review. A branch push does not change the live portfolio.
+`Validate portfolio` runs tests and builds every pushed branch and pull request, then uploads `dist/` as `portfolio-static-site`. Pushing a branch does not publish the live portfolio.
 
-When ready to publish:
+To publish after review:
 
-1. Review and merge the redesign into `main`.
-2. Set **Settings → Pages → Source** to **GitHub Actions**. The old “deploy from a branch” setting does not run Vite.
+1. Merge the redesign into `main`.
+2. Set **Settings → Pages → Source** to **GitHub Actions**.
 3. Run **Publish portfolio to GitHub Pages** from Actions on `main`.
 
-The publishing workflow is manual and restricted to `main`. It runs tests/build before uploading `dist/`; custom-domain DNS settings remain separate.
+The publishing workflow is manual and restricted to `main`. Custom-domain DNS settings remain separate.
 
 ## Validation
 
-Automated checks cover playback, pausing, speed, scrubbing, reduced motion, independent station selection, question/search/review ordering, reversible response streaming, 3D connection endpoints in expanded view, all sourced work, bilingual completeness, output escaping, and local navigation targets. Run them before building. This branch has not been merged or deployed automatically.
+Checks cover all eight project IDs in the directory, bilingual interface completeness, full case-study rendering, content escaping, DOI links, local anchors, pagination bounds, stale animation cancellation, and preservation of desktop state across localization. Browser visual testing is separate from these automated checks.
